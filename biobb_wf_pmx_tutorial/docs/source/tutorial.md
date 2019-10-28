@@ -980,8 +980,8 @@ Analyse(input_A_xvg_zip_path=state_A_xvg_zip,
 ## Output files
 
 Important **Output files** generated:
- - {{output_result}}: **Final free energy estimation**. Summary of information got applying the different methods.
- - {{output_work_plot}}: **Final free energy plot** of the **Mutation free energy** pipeline.
+ - pmx.outputs: **Final free energy estimation**. Summary of information got applying the different methods.
+ - pmx.plots.png: **Final free energy plot** of the **Mutation free energy** pipeline.
 
 ***
 <a id="questions"></a>
@@ -990,6 +990,6 @@ Important **Output files** generated:
 Questions, issues, suggestions and comments are really welcome! 
 
 * GitHub issues: 
-    * https://github.com/bioexcel/biobb
+    * [https://github.com/bioexcel/biobb](https://github.com/bioexcel/biobb)
 * BioExcel forum:
-    * https://ask.bioexcel.eu/  (TODO: biobb category)
+    * [https://ask.bioexcel.eu/](https://ask.bioexcel.eu/)  (TODO: biobb category)
