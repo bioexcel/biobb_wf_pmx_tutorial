@@ -1,6 +1,6 @@
 
 # Mutation Free Energy Calculations using BioExcel Building Blocks (biobb)
-### Based on the official pmx tutorial: http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/index.html
+### Based on the official [pmx tutorial](http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/index.html)
 ***
 This tutorial aims to illustrate how to compute a **fast-growth** **mutation free energy** calculation, step by step, using the **BioExcel Building Blocks library (biobb)**. The particular example used is the **Staphylococcal nuclease** protein (PDB code 1STN), a small, minimal protein, appropriate for a short tutorial. 
 
