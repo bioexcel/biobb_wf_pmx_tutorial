@@ -761,7 +761,7 @@ plotly.offline.iplot(fig)
 <a id="free"></a>
 ***
 ## Free Energy Simulation
-**Alchemical transition (thermodynamic integration)** free energy estimation approach is used with **GROMACS**: **free energy** is switched on, the **initial lambda** is chosen as zero, and **delta-lambda** (per MD step) is set such that at the end of the simulation **lamda** is at 1. The **dhdl files** (dH/dl) written as a result will contain the **work values** required to perform these **transitions**.
+**Alchemical transition (thermodynamic integration)** free energy estimation approach is used with **GROMACS**: **free energy** is switched on, the **initial lambda** is chosen as zero, and **delta-lambda** (per MD step) is set such that at the end of the simulation **lambda** is at 1 (1 / nsteps). The **dhdl files** (dH/dl) written as a result will contain the **work values** required to perform these **transitions**.
 
 - [Step 1](#mdStep1): Creating portable binary run file to run the **free energy simulation**.
 - [Step 2](#mdStep2): Run short MD simulation of the **protein system**.
@@ -778,10 +778,10 @@ The **free_energy** type of the **molecular dynamics parameters (mdp) property**
 
 -  integrator               = md
 -  dt                       = 0.002 (ps)
--  nsteps                   = 50000
+-  nsteps                   = 5000
 -  free_energy              = yes
 -  init_lambda              = 0
--  delta_lambda             = 0.00002
+-  delta_lambda             = 0.0002
 -  sc-alpha                 = 0
 -  sc-sigma                 = 0.3
 
@@ -806,7 +806,7 @@ prop = {
         'nsteps':'5000',
         'free_energy' : 'yes',
         'init-lambda' : '0',
-        'delta-lambda' : '4e-5',
+        'delta-lambda' : '2e-4',
         'sc-alpha' : '0.3',
         'sc-coul' : 'yes',
         'sc-sigma' : '0.25'
@@ -831,7 +831,7 @@ prop = {
         'nsteps':'5000',
         'free_energy' : 'yes',
         'init-lambda' : '0',
-        'delta-lambda' : '4e-5',
+        'delta-lambda' : '2e-4',
         'sc-alpha' : '0.3',
         'sc-coul' : 'yes',
         'sc-sigma' : '0.25'
