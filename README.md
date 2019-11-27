@@ -1,4 +1,5 @@
 [![](https://readthedocs.org/projects/biobb-wf-pmx-tutorial/badge/?version=latest)](https://biobb-wf-pmx-tutorial.readthedocs.io/en/latest/?badge=latest)
+[![](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bioexcel/biobb_wf_pmx_tutorial/master?filepath=biobb_wf_pmx_tutorial%2Fnotebooks%2Fbiobb_wf_pmx_tutorial.ipynb)
 
 # Mutation Free Energy Calculations using BioExcel Building Blocks (biobb)
 
