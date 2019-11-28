@@ -35,6 +35,13 @@ The tutorial calculates the **free energy difference** in the folded state of a 
 * [os](https://docs.python.org/3/library/os.html): Python miscellaneous operating system interfaces
 * [plotly](https://plot.ly/python/offline/): Python interactive graphing library integrated in Jupyter notebooks.
 
+### Conda Installation
+
+
+```console
+conda env create -f binder/environment.yml
+```
+
 ***
 
 ## Tutorial
