@@ -13146,7 +13146,6 @@ div#notebook {
 <p><strong>Auxiliar libraries</strong> used:</p>
 <ul>
 <li><a href="https://github.com/Anaconda-Platform/nb_conda_kernels">nb_conda_kernels</a>: Enables a Jupyter Notebook or JupyterLab application in one conda environment to access kernels for Python, R, and other languages found in other environments.</li>
-<li><a href="https://github.com/jupyter-widgets/ipywidgets">ipywidgets</a>: Interactive HTML widgets for Jupyter notebooks and the IPython kernel.</li>
 <li><a href="https://docs.python.org/3/library/os.html">os</a>: Python miscellaneous operating system interfaces</li>
 <li><a href="https://plot.ly/python/offline/">plotly</a>: Python interactive graphing library integrated in Jupyter notebooks.</li>
 </ul>
@@ -13158,8 +13157,6 @@ div#notebook {
   conda env create -f conda_env/environment.yml
   conda activate biobb_wf_pmx_tutorial
   conda install -y -c bioconda biobb_analysis==2.0.1
-  jupyter-nbextension enable --py --user widgetsnbextension
-  jupyter-nbextension enable --py --user nglview
   jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
 </pre>
 </div>
@@ -13221,7 +13218,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">ipywidgets</span>
+<div class=" highlight hl-ipython3"><pre><span></span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">zipfile</span>
 
@@ -13395,8 +13392,8 @@ div#notebook {
 <span class="n">prop</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;force_field&#39;</span> <span class="p">:</span> <span class="s1">&#39;amber99sb-star-ildn-mut&#39;</span><span class="p">,</span>
     <span class="s1">&#39;mutation_list&#39;</span> <span class="p">:</span> <span class="s1">&#39;Ile10Ala&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;docker_path&#39;</span><span class="p">:</span> <span class="s1">&#39;docker&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;docker_image&#39;</span> <span class="p">:</span> <span class="s1">&#39;mmbirb/pmx&#39;</span>
+    <span class="s1">&#39;container_path&#39;</span><span class="p">:</span> <span class="s1">&#39;docker&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;container_image&#39;</span> <span class="p">:</span> <span class="s1">&#39;mmbirb/pmx&#39;</span>
     <span class="c1">#&#39;pmx_cli_path&#39; : &#39;PATH/pmx-master/pmx/scripts/cli.py&#39;</span>
 <span class="p">}</span>
 <span class="c1"># Create and launch bb</span>
@@ -13412,8 +13409,8 @@ div#notebook {
 <span class="n">prop</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;force_field&#39;</span> <span class="p">:</span> <span class="s1">&#39;amber99sb-star-ildn-mut&#39;</span><span class="p">,</span>
     <span class="s1">&#39;mutation_list&#39;</span> <span class="p">:</span> <span class="s1">&#39;Ala10Ile&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;docker_path&#39;</span><span class="p">:</span> <span class="s1">&#39;docker&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;docker_image&#39;</span> <span class="p">:</span> <span class="s1">&#39;mmbirb/pmx&#39;</span>
+    <span class="s1">&#39;container_path&#39;</span><span class="p">:</span> <span class="s1">&#39;docker&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;container_image&#39;</span> <span class="p">:</span> <span class="s1">&#39;mmbirb/pmx&#39;</span>
     <span class="c1">#&#39;pmx_cli_path&#39; : &#39;PATH/pmx-master/pmx/scripts/cli.py&#39;</span>
 <span class="p">}</span>
 <span class="c1"># Create and launch bb</span>
@@ -13537,8 +13534,8 @@ div#notebook {
   
 <span class="n">prop</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;force_field&#39;</span> <span class="p">:</span> <span class="s1">&#39;amber99sb-star-ildn-mut&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;docker_path&#39;</span> <span class="p">:</span> <span class="s1">&#39;docker&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;docker_image&#39;</span> <span class="p">:</span> <span class="s1">&#39;mmbirb/pmx&#39;</span>
+    <span class="s1">&#39;container_path&#39;</span> <span class="p">:</span> <span class="s1">&#39;docker&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;container_image&#39;</span> <span class="p">:</span> <span class="s1">&#39;mmbirb/pmx&#39;</span>
     <span class="c1">#&#39;pmx_cli_path&#39; : &#39;PATH/pmx-master/pmx/scripts/cli.py&#39;</span>
 <span class="p">}</span>
 
@@ -13556,8 +13553,8 @@ div#notebook {
   
 <span class="n">prop</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;force_field&#39;</span> <span class="p">:</span> <span class="s1">&#39;amber99sb-star-ildn-mut&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;docker_path&#39;</span> <span class="p">:</span> <span class="s1">&#39;docker&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;docker_image&#39;</span> <span class="p">:</span> <span class="s1">&#39;mmbirb/pmx&#39;</span>
+    <span class="s1">&#39;container_path&#39;</span> <span class="p">:</span> <span class="s1">&#39;docker&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;container_image&#39;</span> <span class="p">:</span> <span class="s1">&#39;mmbirb/pmx&#39;</span>
     <span class="c1">#&#39;pmx_cli_path&#39; : &#39;PATH/pmx-master/pmx/scripts/cli.py&#39;</span>
 <span class="p">}</span>
 
@@ -14654,13 +14651,13 @@ if (outputEl) {{
   
 <span class="n">prop</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;reverseB&#39;</span> <span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="s1">&#39;docker_path&#39;</span> <span class="p">:</span> <span class="s1">&#39;docker&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;docker_image&#39;</span> <span class="p">:</span> <span class="s1">&#39;mmbirb/pmx&#39;</span>
+    <span class="s1">&#39;container_path&#39;</span> <span class="p">:</span> <span class="s1">&#39;docker&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;container_image&#39;</span> <span class="p">:</span> <span class="s1">&#39;mmbirb/pmx&#39;</span>
 <span class="p">}</span>
 
 <span class="c1">#Create and launch bb</span>
-<span class="n">Analyse</span><span class="p">(</span><span class="n">input_A_xvg_zip_path</span><span class="o">=</span><span class="n">state_A_xvg_zip</span><span class="p">,</span>
-        <span class="n">input_B_xvg_zip_path</span><span class="o">=</span><span class="n">state_B_xvg_zip</span><span class="p">,</span>
+<span class="n">Analyse</span><span class="p">(</span><span class="n">input_a_xvg_zip_path</span><span class="o">=</span><span class="n">state_A_xvg_zip</span><span class="p">,</span>
+        <span class="n">input_b_xvg_zip_path</span><span class="o">=</span><span class="n">state_B_xvg_zip</span><span class="p">,</span>
         <span class="n">output_result_path</span><span class="o">=</span><span class="n">output_result</span><span class="p">,</span>
         <span class="n">output_work_plot_path</span><span class="o">=</span><span class="n">output_work_plot</span><span class="p">,</span>
         <span class="n">properties</span><span class="o">=</span><span class="n">prop</span><span class="p">)</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span>
