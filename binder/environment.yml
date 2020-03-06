@@ -9,4 +9,5 @@ dependencies:
   - biobb_md==2.0.0
   - biobb_analysis==2.0.3
   - plotly
+  - singularity
   - conda

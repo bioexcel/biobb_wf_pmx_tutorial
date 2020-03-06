@@ -1,0 +1,2 @@
+#!/bin/sh
+singularity pull shub://bioexcel/pmx_docker
