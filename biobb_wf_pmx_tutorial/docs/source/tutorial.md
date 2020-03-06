@@ -31,7 +31,6 @@ git clone https://github.com/bioexcel/biobb_wf_pmx_tutorial.git
 cd biobb_wf_pmx_tutorial
 conda env create -f conda_env/environment.yml
 conda activate biobb_wf_pmx_tutorial
-conda install -y -c bioconda biobb_analysis==2.0.1
 jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
 ```
 
@@ -680,7 +679,7 @@ Please note the information shown by the next plots **increases with the time si
 
 ```python
 import plotly
-from plotly import tools
+from plotly import subplots
 import plotly.graph_objs as go
 
 # Read pressure and density data from file 
@@ -703,7 +702,7 @@ trace2 = go.Scatter(
     x=x,y=z
 )
 
-fig = tools.make_subplots(rows=1, cols=2, print_grid=False)
+fig = subplots.make_subplots(rows=1, cols=2, print_grid=False)
 
 fig.append_trace(trace1, 1, 1)
 fig.append_trace(trace2, 1, 2)
@@ -724,7 +723,7 @@ plotly.offline.iplot(fig)
 
 ```python
 import plotly
-from plotly import tools
+from plotly import subplots
 import plotly.graph_objs as go
 
 # Read pressure and density data from file 
@@ -747,7 +746,7 @@ trace2 = go.Scatter(
     x=x,y=z
 )
 
-fig = tools.make_subplots(rows=1, cols=2, print_grid=False)
+fig = subplots.make_subplots(rows=1, cols=2, print_grid=False)
 
 fig.append_trace(trace1, 1, 1)
 fig.append_trace(trace2, 1, 2)

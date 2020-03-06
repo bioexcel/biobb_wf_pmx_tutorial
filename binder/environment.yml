@@ -7,6 +7,6 @@ dependencies:
   - biobb_common==2.0.1
   - biobb_pmx==2.0.2
   - biobb_md==2.0.0
-  - biobb_analysis==2.0.1
+  - biobb_analysis==2.0.3
   - plotly
   - conda
