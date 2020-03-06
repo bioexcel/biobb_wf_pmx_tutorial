@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - python==3.6
+  - python
   - biobb_common==2.0.1
   - biobb_pmx==2.0.2
   - biobb_md==2.0.0
