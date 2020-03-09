@@ -10,5 +10,4 @@ dependencies:
   - biobb_analysis==2.0.3
   - plotly
   - singularity
-  - docker
   - conda
