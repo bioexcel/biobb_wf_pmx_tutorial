@@ -1,2 +1,3 @@
 #!/bin/sh
 singularity pull shub://bioexcel/pmx_docker
+mv pmx_docker_latest.sif biobb_wf_pmx_tutorial/notebooks/pmx_docker_latest.sif
