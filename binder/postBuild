@@ -1,7 +1,7 @@
 #!/bin/sh
-#mkdir -p /srv/conda/envs/notebook/var/singularity/mnt/container
-#mkdir -p /srv/conda/envs/notebook/var/singularity/mnt/final
-#mkdir -p /srv/conda/envs/notebook/var/singularity/mnt/overlay
-#mkdir -p /srv/conda/envs/notebook/var/singularity/mnt/session
+mkdir -p /srv/conda/envs/notebook/var/singularity/mnt/container
+mkdir -p /srv/conda/envs/notebook/var/singularity/mnt/final
+mkdir -p /srv/conda/envs/notebook/var/singularity/mnt/overlay
+mkdir -p /srv/conda/envs/notebook/var/singularity/mnt/session
 singularity pull --name pmx.sif shub://bioexcel/pmx_docker
 mv pmx.sif biobb_wf_pmx_tutorial/notebooks/pmx.sif
