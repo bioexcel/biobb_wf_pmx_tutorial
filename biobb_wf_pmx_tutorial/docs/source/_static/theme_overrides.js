@@ -1,3 +1,3 @@
 $(document).ready(function(){
-	$('.icon.icon-home').html('<img src="_static/logo.png" class="logo" alt="Logo">');
+	$('.icon.icon-home').html('<img src="_static/logo_bb.png" class="logo" alt="Logo">');
 });
