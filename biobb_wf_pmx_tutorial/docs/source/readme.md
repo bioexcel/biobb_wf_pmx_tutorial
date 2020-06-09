@@ -8,7 +8,7 @@
 
 ***
 
-<div style="background:#b5e0dd;padding:15px;margin-bottom:20px;"><strong>Important:</strong> This tutorial is using a <strong>Docker container</strong> to run <strong>pmx</strong>. To use a local installation of <strong>pmx</strong>, just modify the appropriate properties parameter <strong>pmx_cli_path</strong>.</div>
+> **Important:** This tutorial is using a **Docker container** to run **pmx**. To use a local installation of <strong>pmx</strong>, just modify the appropriate properties parameter **pmx_cli_path**.
 
 This tutorial aims to illustrate how to compute a **fast-growth mutation free energy** calculation, step by step, using the BioExcel **Building Blocks library (biobb)**. The particular example used is the **Staphylococcal nuclease** protein (PDB code 1STN), a small, minimal protein, appropriate for a short tutorial.
 
