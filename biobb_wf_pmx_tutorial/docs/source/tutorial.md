@@ -186,7 +186,7 @@ pdbB = stateB_pdb_list[0]
 *Note:* This tutorial is using a **Docker container** to run **pmx**. To use a local installation of **pmx**, just modify the appropriate properties parameter **pmx_cli_path**. 
 ***
 **Building Blocks** used:
- - [Mutate](https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.mutate) from **biobb_pmx.pmx.mutate**
+ - [Pmxmutate](https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.pmxmutate) from **biobb_pmx.pmx.pmxmutate**
 ***
 
 ## WARNING
@@ -200,7 +200,7 @@ This process is **only done once**. When the docker is downloaded, the system wi
 # pmx mutate: Mutate command from pmx package
 
 # Import module
-from biobb_pmx.pmx.mutate import Mutate
+from biobb_pmx.pmx.pmxmutate import Pmxmutate
 
 #### State A (WT->Mut) ####
 
@@ -215,7 +215,7 @@ prop = {
     #'pmx_cli_path' : 'PATH/pmx-master/pmx/scripts/cli.py'
 }
 # Create and launch bb
-Mutate(input_structure_path=pdbA,
+Pmxmutate(input_structure_path=pdbA,
        output_structure_path=output_structure_mutA,
        properties=prop).launch()
 
@@ -232,7 +232,7 @@ prop = {
     #'pmx_cli_path' : 'PATH/pmx-master/pmx/scripts/cli.py'
 }
 # Create and launch bb
-Mutate(input_structure_path=pdbB,
+Pmxmutate(input_structure_path=pdbB,
        output_structure_path=output_structure_mutB,
        properties=prop).launch()
 
@@ -304,7 +304,7 @@ Pdb2gmx(input_pdb_path=output_structure_mutB,
 *Note:* This tutorial is using a **Docker container** to run **pmx**. To use a local installation of **pmx**, just modify the appropriate properties parameter **pmx_cli_path**. 
 ***
 **Building Blocks** used:
- - [Gentop](https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.gentop) from **biobb_pmx.pmx.gentop**
+ - [Pmxgentop](https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.pmxgentop) from **biobb_pmx.pmx.pmxgentop**
 ***
 
 
@@ -312,7 +312,7 @@ Pdb2gmx(input_pdb_path=output_structure_mutB,
 # pmx gentop: Gentop command (Generate Hybrid Topology) from pmx package
 
 # Import module
-from biobb_pmx.pmx.gentop import Gentop
+from biobb_pmx.pmx.pmxgentop import Pmxgentop
 
 #### State A (WT->Mut) ####
 
@@ -328,7 +328,7 @@ prop = {
 }
 
 #Create and launch bb
-Gentop(input_top_zip_path=output_pdb2gmxA_top_zip,
+Pmxgentop(input_top_zip_path=output_pdb2gmxA_top_zip,
        output_top_zip_path=output_pmxtopA_top_zip,
        output_log_path=output_pmxtopA_log,
        properties=prop).launch()
@@ -347,7 +347,7 @@ prop = {
 }
 
 # Create and launch bb
-Gentop(input_top_zip_path=output_pdb2gmxB_top_zip,
+Pmxgentop(input_top_zip_path=output_pdb2gmxB_top_zip,
        output_top_zip_path=output_pmxtopB_top_zip,
        output_log_path=output_pmxtopB_log,
        properties=prop).launch()
@@ -912,7 +912,7 @@ The **Fast Growth TI** approach relies on **Jarzynski's equality** (when transit
 *Note:* This tutorial is using a **Docker container** to run **pmx**. To use a local installation of **pmx**, just modify the appropriate properties parameter **pmx_cli_path**. 
 ***
 **Building Blocks** used:
- - [Analyse](https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.analyse) from **biobb_pmx.pmx.analyse** 
+ - [Pmxanalyse](https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.pmxanalyse) from **biobb_pmx.pmx.pmxanalyse** 
 ***
 
 <a id="tiStep1"></a>
@@ -953,7 +953,7 @@ Compute the **free energy** using **Jarzynski's equality**, **Crooks Fluctuation
 # pmx analyse: analyze_dhdl command from pmx package
 
 # Import module
-from biobb_pmx.pmx.analyse import Analyse
+from biobb_pmx.pmx.pmxanalyse import Pmxanalyse
 
 # Create prop dict and inputs/outputs
 
@@ -976,7 +976,7 @@ prop = {
 }
 
 #Create and launch bb
-Analyse(input_A_xvg_zip_path=state_A_xvg_zip,
+Pmxanalyse(input_A_xvg_zip_path=state_A_xvg_zip,
         input_B_xvg_zip_path=state_B_xvg_zip,
         output_result_path=output_result,
         output_work_plot_path=output_work_plot,

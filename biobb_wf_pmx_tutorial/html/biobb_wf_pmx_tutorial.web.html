@@ -13371,7 +13371,7 @@ div#notebook {
 <hr>
 <p><strong>Building Blocks</strong> used:</p>
 <ul>
-<li><a href="https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.mutate">Mutate</a> from <strong>biobb_pmx.pmx.mutate</strong></li>
+<li><a href="https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.pmxmutate">Pmxmutate</a> from <strong>biobb_pmx.pmx.pmxmutate</strong></li>
 </ul>
 <hr>
 
@@ -13396,7 +13396,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># pmx mutate: Mutate command from pmx package</span>
 
 <span class="c1"># Import module</span>
-<span class="kn">from</span> <span class="nn">biobb_pmx.pmx.mutate</span> <span class="k">import</span> <span class="n">Mutate</span>
+<span class="kn">from</span> <span class="nn">biobb_pmx.pmx.pmxmutate</span> <span class="k">import</span> <span class="n">Pmxmutate</span>
 
 <span class="c1">#### State A (WT-&gt;Mut) ####</span>
 
@@ -13411,7 +13411,7 @@ div#notebook {
     <span class="c1">#&#39;pmx_cli_path&#39; : &#39;PATH/pmx-master/pmx/scripts/cli.py&#39;</span>
 <span class="p">}</span>
 <span class="c1"># Create and launch bb</span>
-<span class="n">Mutate</span><span class="p">(</span><span class="n">input_structure_path</span><span class="o">=</span><span class="n">pdbA</span><span class="p">,</span>
+<span class="n">Pmxmutate</span><span class="p">(</span><span class="n">input_structure_path</span><span class="o">=</span><span class="n">pdbA</span><span class="p">,</span>
        <span class="n">output_structure_path</span><span class="o">=</span><span class="n">output_structure_mutA</span><span class="p">,</span>
        <span class="n">properties</span><span class="o">=</span><span class="n">prop</span><span class="p">)</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span>
 
@@ -13428,7 +13428,7 @@ div#notebook {
     <span class="c1">#&#39;pmx_cli_path&#39; : &#39;PATH/pmx-master/pmx/scripts/cli.py&#39;</span>
 <span class="p">}</span>
 <span class="c1"># Create and launch bb</span>
-<span class="n">Mutate</span><span class="p">(</span><span class="n">input_structure_path</span><span class="o">=</span><span class="n">pdbB</span><span class="p">,</span>
+<span class="n">Pmxmutate</span><span class="p">(</span><span class="n">input_structure_path</span><span class="o">=</span><span class="n">pdbB</span><span class="p">,</span>
        <span class="n">output_structure_path</span><span class="o">=</span><span class="n">output_structure_mutB</span><span class="p">,</span>
        <span class="n">properties</span><span class="o">=</span><span class="n">prop</span><span class="p">)</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span>
 </pre></div>
@@ -13523,7 +13523,7 @@ div#notebook {
 <hr>
 <p><strong>Building Blocks</strong> used:</p>
 <ul>
-<li><a href="https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.gentop">Gentop</a> from <strong>biobb_pmx.pmx.gentop</strong></li>
+<li><a href="https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.pmxgentop">Pmxgentop</a> from <strong>biobb_pmx.pmx.pmxgentop</strong></li>
 </ul>
 <hr>
 
@@ -13538,7 +13538,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># pmx gentop: Gentop command (Generate Hybrid Topology) from pmx package</span>
 
 <span class="c1"># Import module</span>
-<span class="kn">from</span> <span class="nn">biobb_pmx.pmx.gentop</span> <span class="k">import</span> <span class="n">Gentop</span>
+<span class="kn">from</span> <span class="nn">biobb_pmx.pmx.pmxgentop</span> <span class="k">import</span> <span class="n">Pmxgentop</span>
 
 <span class="c1">#### State A (WT-&gt;Mut) ####</span>
 
@@ -13554,7 +13554,7 @@ div#notebook {
 <span class="p">}</span>
 
 <span class="c1">#Create and launch bb</span>
-<span class="n">Gentop</span><span class="p">(</span><span class="n">input_top_zip_path</span><span class="o">=</span><span class="n">output_pdb2gmxA_top_zip</span><span class="p">,</span>
+<span class="n">Pmxgentop</span><span class="p">(</span><span class="n">input_top_zip_path</span><span class="o">=</span><span class="n">output_pdb2gmxA_top_zip</span><span class="p">,</span>
        <span class="n">output_top_zip_path</span><span class="o">=</span><span class="n">output_pmxtopA_top_zip</span><span class="p">,</span>
        <span class="n">output_log_path</span><span class="o">=</span><span class="n">output_pmxtopA_log</span><span class="p">,</span>
        <span class="n">properties</span><span class="o">=</span><span class="n">prop</span><span class="p">)</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span>
@@ -13573,7 +13573,7 @@ div#notebook {
 <span class="p">}</span>
 
 <span class="c1"># Create and launch bb</span>
-<span class="n">Gentop</span><span class="p">(</span><span class="n">input_top_zip_path</span><span class="o">=</span><span class="n">output_pdb2gmxB_top_zip</span><span class="p">,</span>
+<span class="n">Pmxgentop</span><span class="p">(</span><span class="n">input_top_zip_path</span><span class="o">=</span><span class="n">output_pdb2gmxB_top_zip</span><span class="p">,</span>
        <span class="n">output_top_zip_path</span><span class="o">=</span><span class="n">output_pmxtopB_top_zip</span><span class="p">,</span>
        <span class="n">output_log_path</span><span class="o">=</span><span class="n">output_pmxtopB_log</span><span class="p">,</span>
        <span class="n">properties</span><span class="o">=</span><span class="n">prop</span><span class="p">)</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span>
@@ -14569,7 +14569,7 @@ if (outputEl) {{
 <hr>
 <p><strong>Building Blocks</strong> used:</p>
 <ul>
-<li><a href="https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.analyse">Analyse</a> from <strong>biobb_pmx.pmx.analyse</strong> </li>
+<li><a href="https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.pmxanalyse">Pmxanalyse</a> from <strong>biobb_pmx.pmx.pmxanalyse</strong> </li>
 </ul>
 <hr>
 
@@ -14635,7 +14635,7 @@ if (outputEl) {{
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># pmx analyse: analyze_dhdl command from pmx package</span>
 
 <span class="c1"># Import module</span>
-<span class="kn">from</span> <span class="nn">biobb_pmx.pmx.analyse</span> <span class="k">import</span> <span class="n">Analyse</span>
+<span class="kn">from</span> <span class="nn">biobb_pmx.pmx.pmxanalyse</span> <span class="k">import</span> <span class="n">Pmxanalyse</span>
 
 <span class="c1"># Create prop dict and inputs/outputs</span>
 
@@ -14658,7 +14658,7 @@ if (outputEl) {{
 <span class="p">}</span>
 
 <span class="c1">#Create and launch bb</span>
-<span class="n">Analyse</span><span class="p">(</span><span class="n">input_a_xvg_zip_path</span><span class="o">=</span><span class="n">state_A_xvg_zip</span><span class="p">,</span>
+<span class="n">Pmxanalyse</span><span class="p">(</span><span class="n">input_a_xvg_zip_path</span><span class="o">=</span><span class="n">state_A_xvg_zip</span><span class="p">,</span>
         <span class="n">input_b_xvg_zip_path</span><span class="o">=</span><span class="n">state_B_xvg_zip</span><span class="p">,</span>
         <span class="n">output_result_path</span><span class="o">=</span><span class="n">output_result</span><span class="p">,</span>
         <span class="n">output_work_plot_path</span><span class="o">=</span><span class="n">output_work_plot</span><span class="p">,</span>
