@@ -2,14 +2,13 @@
 ### Based on the official pmx tutorial: http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/index.html
 ***
 
-<div style="background:#b5e0dd;padding:15px;margin-bottom:20px;"><strong>Important:</strong> This tutorial is using a <strong>Docker container</strong> to run <strong>pmx</strong>. To use a local installation of <strong>pmx</strong>, just modify the appropriate properties parameter <strong>pmx_cli_path</strong>.</div>
+<div style="background:#b5e0dd;padding:15px;"><strong>Important:</strong> This tutorial is using a <strong>Docker container</strong> to run <strong>pmx</strong>. To use a local installation of <strong>pmx</strong>, just modify the appropriate properties parameter <strong>pmx_cli_path</strong>.</div>
 
 This tutorial aims to illustrate how to compute a **fast-growth** **mutation free energy** calculation, step by step, using the **BioExcel Building Blocks library (biobb)**. The particular example used is the **Staphylococcal nuclease** protein (PDB code 1STN), a small, minimal protein, appropriate for a short tutorial. 
 
 The **non-equilibrium free energy calculation** protocol performs a **fast alchemical transition** in the direction **WT->Mut** and back **Mut->WT**. The two **equilibrium trajectories** needed for the tutorial, one for **Wild Type (WT)** and another for the **Mutated (Mut)** protein (Isoleucine 10 to Alanine -I10A-), have already been generated and are included in this example.  We will name **WT as stateA** and **Mut as stateB**.
 
-
-<img src="_static/schema.png" />
+<img src="schema.png" />
 
 The tutorial calculates the **free energy difference** in the folded state of a protein. Starting from **two 1ns-length independent equilibrium simulations** (WT and mutant), snapshots are selected to start **fast (50ps) transitions** driving the system in the **forward** (WT to mutant) and **reverse** (mutant to WT) directions, and the **work values** required to perform these transitions are collected. With these values, **Crooks Gaussian Intersection** (CGI), **Bennett Acceptance Ratio** (BAR) and **Jarzynski estimator** methods are used to calculate the **free energy difference** between the two states.
 
@@ -34,9 +33,8 @@ git clone https://github.com/bioexcel/biobb_wf_pmx_tutorial.git
 cd biobb_wf_pmx_tutorial
 conda env create -f conda_env/environment.yml
 conda activate biobb_wf_pmx_tutorial
-jupyter-nbextension enable --py --user widgetsnbextension
 jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
-```
+  ``` 
 
 ***
 ### Pipeline steps:
@@ -54,7 +52,7 @@ jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
  12. [Questions & Comments](#questions)
 
 ***
-<img style="width:400px;" src="_static/logo.png" />
+<img style="width:400px;" src="logo.png" />
 
 ***
 
@@ -76,7 +74,6 @@ Collected **transitions work values**:
 
 
 ```python
-import ipywidgets
 import os
 import zipfile
 
@@ -210,8 +207,8 @@ output_structure_mutA = 'mutA.pdb'
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
     'mutation_list' : 'Ile10Ala',
-    'docker_path': 'docker',
-    'docker_image' : 'mmbirb/pmx'
+    'container_path': 'docker',
+    'container_image' : 'mmbirb/pmx'
     #'pmx_cli_path' : 'PATH/pmx-master/pmx/scripts/cli.py'
 }
 # Create and launch bb
@@ -227,8 +224,8 @@ output_structure_mutB = 'mutB.pdb'
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
     'mutation_list' : 'Ala10Ile',
-    'docker_path': 'docker',
-    'docker_image' : 'mmbirb/pmx'
+    'container_path': 'docker',
+    'container_image' : 'mmbirb/pmx'
     #'pmx_cli_path' : 'PATH/pmx-master/pmx/scripts/cli.py'
 }
 # Create and launch bb
@@ -322,8 +319,8 @@ output_pmxtopA_log = 'pmxA_top.log'
   
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
-    'docker_path' : 'docker',
-    'docker_image' : 'mmbirb/pmx'
+    'container_path' : 'docker',
+    'container_image' : 'mmbirb/pmx'
     #'pmx_cli_path' : 'PATH/pmx-master/pmx/scripts/cli.py'
 }
 
@@ -341,8 +338,8 @@ output_pmxtopB_log = 'pmxB_top.log'
   
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
-    'docker_path' : 'docker',
-    'docker_image' : 'mmbirb/pmx'
+    'container_path' : 'docker',
+    'container_image' : 'mmbirb/pmx'
     #'pmx_cli_path' : 'PATH/pmx-master/pmx/scripts/cli.py'
 }
 
@@ -515,7 +512,7 @@ fig = ({
 plotly.offline.iplot(fig)
 ```
 
-<img src="_static/plot1.png"></img>
+<img src='_static/plot3.png' />
 
 <a id="npt"></a>
 ***
@@ -537,8 +534,8 @@ Equilibrate the **protein system** in **NPT** ensemble (constant Number of parti
 The **npt** type of the **molecular dynamics parameters (mdp) property** contains the main default parameters to run an **NPT equilibration** with **protein restraints** (see [GROMACS mdp options](http://manual.gromacs.org/documentation/2018/user-guide/mdp-options.html)):
 
 -  integrator               = md
--  dt                       = 0.002
--  nsteps                   = 5000
+-  dt                       = 0.001
+-  nsteps                   = 10000
 -  pcoupl = Parrinello-Rahman
 -  pcoupltype = isotropic
 -  tau_p = 1.0
@@ -590,7 +587,8 @@ prop = {
     'gmxlib' : gmxlib,
     'mdp':{
         'type': 'free',
-        'nsteps':'5000',
+        'nsteps':'10000', # 10000 steps x 1fs (timestep) = 10ps 
+        'dt':'0.001', # 1 fs of timestep, to properly equilibrate dummy atoms
         'nstcomm' : '1',
         'nstcalcenergy' : '1'
     }
@@ -722,7 +720,7 @@ fig['layout'].update(showlegend=False)
 plotly.offline.iplot(fig)
 ```
 
-<img src='_static/plot2.png'></img>
+<img src='_static/plot1.png' />
 
 
 ```python
@@ -766,7 +764,7 @@ fig['layout'].update(showlegend=False)
 plotly.offline.iplot(fig)
 ```
 
-<img src='_static/plot3.png'></img>
+<img src='_static/plot2.png' />
 
 <a id="free"></a>
 ***
@@ -841,7 +839,7 @@ prop = {
         'nsteps':'5000',
         'free_energy' : 'yes',
         'init-lambda' : '0',
-        'delta-lambda' : '2e-4',
+        'delta-lambda' : '4e-5',
         'sc-alpha' : '0.3',
         'sc-coul' : 'yes',
         'sc-sigma' : '0.25'
@@ -971,27 +969,27 @@ output_work_plot = 'pmx.plots.png'
   
 prop = {
     'reverseB' : True,
-    'docker_path' : 'docker',
-    'docker_image' : 'mmbirb/pmx'
+    'container_path' : 'docker',
+    'container_image' : 'mmbirb/pmx'
 }
 
 #Create and launch bb
-Pmxanalyse(input_A_xvg_zip_path=state_A_xvg_zip,
-        input_B_xvg_zip_path=state_B_xvg_zip,
+Pmxanalyse(input_a_xvg_zip_path=state_A_xvg_zip,
+        input_b_xvg_zip_path=state_B_xvg_zip,
         output_result_path=output_result,
         output_work_plot_path=output_work_plot,
         properties=prop).launch()
 
 ```
 
-<img src='_static/output.png'></img>
+<img src='_static/pmx.plots.png'></img>
 
 <a id="output"></a>
 ## Output files
 
 Important **Output files** generated:
- - pmx.outputs: **Final free energy estimation**. Summary of information got applying the different methods.
- - pmx.plots.png: **Final free energy plot** of the **Mutation free energy** pipeline.
+ - {{output_result}}: **Final free energy estimation**. Summary of information got applying the different methods.
+ - {{output_work_plot}}: **Final free energy plot** of the **Mutation free energy** pipeline.
 
 ***
 <a id="questions"></a>
@@ -1005,3 +1003,4 @@ Questions, issues, suggestions and comments are really welcome!
 
 * BioExcel forum:
     * [https://ask.bioexcel.eu/c/BioExcel-Building-Blocks-library](https://ask.bioexcel.eu/c/BioExcel-Building-Blocks-library)
+
