@@ -39,7 +39,7 @@ The tutorial calculates the **free energy difference** in the folded state of a 
 ### Conda Installation and Launch
 
 ```console
-git clone https://github.com/bioexcel/biobb_wf_pmx_tutorial.git
+git clone -b pmx_standalone --single-branch https://github.com/bioexcel/biobb_wf_pmx_tutorial.git
 cd biobb_wf_pmx_tutorial
 conda env create -f conda_env/environment.yml
 conda activate biobb_wf_pmx_tutorial
