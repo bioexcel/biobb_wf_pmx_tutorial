@@ -36,3 +36,4 @@ biobb_wf_pmx_tutorial/notebooks/*.docs.ipynb
 *.old.ipynb
 *.bk.ipynb
 \#*\#
+.idea
