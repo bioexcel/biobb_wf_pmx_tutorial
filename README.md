@@ -43,6 +43,7 @@ git clone -b pmx_standalone --single-branch https://github.com/bioexcel/biobb_wf
 cd biobb_wf_pmx_tutorial
 conda env create -f conda_env/environment.yml
 conda activate biobb_wf_pmx_tutorial
+jupyter-nbextension enable --py --user widgetsnbextension
 jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
 ```
 
