@@ -8,5 +8,6 @@ dependencies:
   - biobb_md==3.0.1
   - biobb_analysis==3.0.2
   - nb_conda_kernels
+  - nb_convert
   - plotly
   - conda
