@@ -8,8 +8,6 @@
 
 ***
 
-> **Important:** This tutorial is using a **Docker container** to run **pmx**. To use a local installation of <strong>pmx</strong>, just modify the appropriate properties parameter **pmx_cli_path**.
-
 This tutorial aims to illustrate how to compute a **fast-growth mutation free energy** calculation, step by step, using the BioExcel **Building Blocks library (biobb)**. The particular example used is the **Staphylococcal nuclease** protein (PDB code 1STN), a small, minimal protein, appropriate for a short tutorial.
 
 The **non-equilibrium free energy calculation** protocol performs a **fast alchemical transition** in the direction **WT->Mut** and back **Mut->WT**. The two equilibrium trajectories needed for the tutorial, one for **Wild Type (WT)** and another for the **Mutated (Mut)** protein (Isoleucine 10 to Alanine -I10A-), have already been generated and are included in this example. We will name **WT as stateA** and **Mut as stateB**.
@@ -39,7 +37,7 @@ The tutorial calculates the **free energy difference** in the folded state of a 
 ### Conda Installation and Launch
 
 ```console
-git clone https://github.com/bioexcel/biobb_wf_pmx_tutorial.git
+git clone -b pmx_standalone --single-branch https://github.com/bioexcel/biobb_wf_pmx_tutorial.git
 cd biobb_wf_pmx_tutorial
 conda env create -f conda_env/environment.yml
 conda activate biobb_wf_pmx_tutorial
@@ -56,7 +54,7 @@ Click here to [view tutorial in Read the Docs](https://biobb-wf-pmx-tutorial.rea
 ***
 
 ## Version
-June 2020 Release
+October 2020 Release
 
 ## Copyright & Licensing
 This software has been developed in the [MMB group](http://mmb.irbbarcelona.org) at the [BSC](http://www.bsc.es/) & [IRB](https://www.irbbarcelona.org/) for the [European BioExcel](http://bioexcel.eu/), funded by the European Commission (EU H2020 [823830](http://cordis.europa.eu/projects/823830), EU H2020 [675728](http://cordis.europa.eu/projects/675728)).
