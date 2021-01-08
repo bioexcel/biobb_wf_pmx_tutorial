@@ -2,13 +2,11 @@
 ### Based on the official pmx tutorial: http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/index.html
 ***
 
-<div style="background:#b5e0dd;padding:15px;"><strong>Important:</strong> This tutorial is using a <strong>Docker container</strong> to run <strong>pmx</strong>. To use a local installation of <strong>pmx</strong>, just modify the appropriate properties parameter <strong>pmx_cli_path</strong>.</div>
-
 This tutorial aims to illustrate how to compute a **fast-growth** **mutation free energy** calculation, step by step, using the **BioExcel Building Blocks library (biobb)**. The particular example used is the **Staphylococcal nuclease** protein (PDB code 1STN), a small, minimal protein, appropriate for a short tutorial. 
 
 The **non-equilibrium free energy calculation** protocol performs a **fast alchemical transition** in the direction **WT->Mut** and back **Mut->WT**. The two **equilibrium trajectories** needed for the tutorial, one for **Wild Type (WT)** and another for the **Mutated (Mut)** protein (Isoleucine 10 to Alanine -I10A-), have already been generated and are included in this example.  We will name **WT as stateA** and **Mut as stateB**.
 
-<img src='_static/schema.png' />
+<img src="_static/schema.png" />
 
 The tutorial calculates the **free energy difference** in the folded state of a protein. Starting from **two 1ns-length independent equilibrium simulations** (WT and mutant), snapshots are selected to start **fast (50ps) transitions** driving the system in the **forward** (WT to mutant) and **reverse** (mutant to WT) directions, and the **work values** required to perform these transitions are collected. With these values, **Crooks Gaussian Intersection** (CGI), **Bennett Acceptance Ratio** (BAR) and **Jarzynski estimator** methods are used to calculate the **free energy difference** between the two states.
 
@@ -33,6 +31,7 @@ git clone https://github.com/bioexcel/biobb_wf_pmx_tutorial.git
 cd biobb_wf_pmx_tutorial
 conda env create -f conda_env/environment.yml
 conda activate biobb_wf_pmx_tutorial
+jupyter-nbextension enable --py --user widgetsnbextension
 jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
   ``` 
 
@@ -78,7 +77,7 @@ import os
 import zipfile
 
 cwd = os.getcwd()
-gmxlib = cwd + "/pmx_tutorial/mutff45"
+gmxlib = os.getenv('CONDA_PREFIX')+'/lib/python3.7/site-packages/pmx/data/mutff45/'
 
 stateA_traj = cwd + "/pmx_tutorial/stateA_1ns.xtc"
 stateA_tpr = cwd + "/pmx_tutorial/stateA.tpr"
@@ -180,16 +179,9 @@ pdbB = stateB_pdb_list[0]
 
 **Alanine** residue nº10 will be mutated to an **Isoleucine** in the **reverse** transition.
 
-*Note:* This tutorial is using a **Docker container** to run **pmx**. To use a local installation of **pmx**, just modify the appropriate properties parameter **pmx_cli_path**. 
 ***
 **Building Blocks** used:
  - [Pmxmutate](https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.pmxmutate) from **biobb_pmx.pmx.pmxmutate**
-***
-
-## WARNING
-The first time that **pmx Docker** container is used, it will be **automatically downloaded** and integrated in the Docker system. This can take **some time, in the order of minutes**, depending on the available **network**. Please, be patient if the workflow gets stuck in this step. 
-
-This process is **only done once**. When the docker is downloaded, the system will locate it and **it will not be required to download again**.     
 ***
 
 
@@ -207,9 +199,8 @@ output_structure_mutA = 'mutA.pdb'
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
     'mutation_list' : 'Ile10Ala',
-    'container_path': 'docker',
-    'container_image' : 'mmbirb/pmx'
-    #'pmx_cli_path' : 'PATH/pmx-master/pmx/scripts/cli.py'
+    'pmx_path' : 'pmx',
+    'gmx_lib' : gmxlib
 }
 # Create and launch bb
 Pmxmutate(input_structure_path=pdbA,
@@ -224,9 +215,8 @@ output_structure_mutB = 'mutB.pdb'
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
     'mutation_list' : 'Ala10Ile',
-    'container_path': 'docker',
-    'container_image' : 'mmbirb/pmx'
-    #'pmx_cli_path' : 'PATH/pmx-master/pmx/scripts/cli.py'
+    'pmx_path' : 'pmx',
+    'gmx_lib' : gmxlib
 }
 # Create and launch bb
 Pmxmutate(input_structure_path=pdbB,
@@ -262,12 +252,12 @@ from biobb_md.gromacs.pdb2gmx import Pdb2gmx
 #### State A (WT->Mut) ####
 
 # Create inputs/outputs
-output_pdb2gmxA_gro = 'pdb2gmxA.pdb'
+output_pdb2gmxA_gro = 'pdb2gmxA.gro'
 output_pdb2gmxA_top_zip = 'pdb2gmxA_top.zip'
   
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
-    'gmxlib' : gmxlib
+    'gmx_lib' : gmxlib
 }
 
 # Create and launch bb
@@ -279,12 +269,12 @@ Pdb2gmx(input_pdb_path=output_structure_mutA,
 #### State B (Mut->WT) ####
 
 # Create inputs/outputs
-output_pdb2gmxB_gro = 'pdb2gmxB.pdb'
+output_pdb2gmxB_gro = 'pdb2gmxB.gro'
 output_pdb2gmxB_top_zip = 'pdb2gmxB_top.zip'
   
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
-    'gmxlib' : gmxlib
+    'gmx_lib' : gmxlib
 }
 
 # Create and launch bb
@@ -298,7 +288,6 @@ Pdb2gmx(input_pdb_path=output_structure_mutB,
 ## Generate Hybrid Topology
 **Generate Hybrid Topology** for the mutated structure using **pmx** package, adding the **morphing parameters**. 
 
-*Note:* This tutorial is using a **Docker container** to run **pmx**. To use a local installation of **pmx**, just modify the appropriate properties parameter **pmx_cli_path**. 
 ***
 **Building Blocks** used:
  - [Pmxgentop](https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.pmxgentop) from **biobb_pmx.pmx.pmxgentop**
@@ -319,9 +308,8 @@ output_pmxtopA_log = 'pmxA_top.log'
   
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
-    'container_path' : 'docker',
-    'container_image' : 'mmbirb/pmx'
-    #'pmx_cli_path' : 'PATH/pmx-master/pmx/scripts/cli.py'
+    'pmx_path' : 'pmx',
+    'gmx_lib' : gmxlib
 }
 
 #Create and launch bb
@@ -338,9 +326,8 @@ output_pmxtopB_log = 'pmxB_top.log'
   
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
-    'container_path' : 'docker',
-    'container_image' : 'mmbirb/pmx'
-    #'pmx_cli_path' : 'PATH/pmx-master/pmx/scripts/cli.py'
+    'pmx_path' : 'pmx',
+    'gmx_lib' : gmxlib
 }
 
 # Create and launch bb
@@ -416,9 +403,8 @@ from biobb_md.gromacs.grompp import Grompp
 output_tpr_min = 'em.tpr'
 
 prop = {
-    'gmxlib' : gmxlib,
+    'gmx_lib' : gmxlib,
     'mdp':{
-        'type': 'minimization',
         'integrator' : 'steep',
         'emtol': '100',
         'dt': '0.001',
@@ -427,7 +413,8 @@ prop = {
         'nstcalcenergy': '1',
         'freezegrps' : 'FREEZE',
         'freezedim' : "Y Y Y"
-    }
+    }, 
+    'simulation_type': 'minimization'
 }
 
 # Create and launch bb
@@ -512,7 +499,7 @@ fig = ({
 plotly.offline.iplot(fig)
 ```
 
-<img src='_static/plot1.png' />
+<img src='_static/plot1.png'></img>
 
 <a id="npt"></a>
 ***
@@ -555,21 +542,19 @@ from biobb_md.gromacs.grompp import Grompp
 
 #### State A (WT->Mut) ####
 
-
-cwd = os.getcwd()
-gmxlib = cwd + "/pmx_tutorial/mutff45"
-
 # Create prop dict and inputs/outputs
 output_tprA_eq = 'eqA_20ps.tpr'
 
 prop = {
-    'gmxlib' : gmxlib,
+    'gmx_lib' : gmxlib,
     'mdp':{
-        'type': 'free',
-        'nsteps':'5000',
+        'nsteps':'10000',
         'nstcomm' : '1',
+        'dt':'0.001',
         'nstcalcenergy' : '1'
-    }
+    }, 
+    'simulation_type': 'free'
+    
 }
 
 #Create and launch bb
@@ -578,20 +563,21 @@ Grompp(input_gro_path=output_pdb2gmxA_gro,
        output_tpr_path=output_tprA_eq,
        properties=prop).launch()
 
+
 #### State B (Mut->WT) ####
 
 # Create prop dict and inputs/outputs
 output_tprB_eq = 'eqB_20ps.tpr'
 
 prop = {
-    'gmxlib' : gmxlib,
+    'gmx_lib' : gmxlib,
     'mdp':{
-        'type': 'free',
         'nsteps':'10000', # 10000 steps x 1fs (timestep) = 10ps 
         'dt':'0.001', # 1 fs of timestep, to properly equilibrate dummy atoms
         'nstcomm' : '1',
         'nstcalcenergy' : '1'
-    }
+    }, 
+    'simulation_type': 'free'
 }
 #Create and launch bb
 Grompp(input_gro_path=output_min_gro,
@@ -720,7 +706,7 @@ fig['layout'].update(showlegend=False)
 plotly.offline.iplot(fig)
 ```
 
-<img src='_static/plot2.png' />
+<img src='_static/plot2.png'></img>
 
 
 ```python
@@ -764,7 +750,7 @@ fig['layout'].update(showlegend=False)
 plotly.offline.iplot(fig)
 ```
 
-<img src='_static/plot3.png' />
+<img src='_static/plot3.png'></img>
 
 <a id="free"></a>
 ***
@@ -808,9 +794,8 @@ from biobb_md.gromacs.grompp import Grompp
 output_tprA_ti = 'tiA.tpr'
 
 prop = {
-    'gmxlib' : gmxlib,
+    'gmx_lib' : gmxlib,
     'mdp':{
-        'type': 'free',
         'nsteps':'5000',
         'free_energy' : 'yes',
         'init-lambda' : '0',
@@ -818,7 +803,8 @@ prop = {
         'sc-alpha' : '0.3',
         'sc-coul' : 'yes',
         'sc-sigma' : '0.25'
-    }
+    }, 
+    'simulation_type': 'free'
 }
 
 # Create and launch bb
@@ -833,9 +819,8 @@ Grompp(input_gro_path=output_eqA_gro,
 output_tprB_ti = 'tiB.tpr'
 
 prop = {
-    'gmxlib' : gmxlib,
+    'gmx_lib' : gmxlib,
     'mdp':{
-        'type': 'free',
         'nsteps':'5000',
         'free_energy' : 'yes',
         'init-lambda' : '0',
@@ -843,7 +828,8 @@ prop = {
         'sc-alpha' : '0.3',
         'sc-coul' : 'yes',
         'sc-sigma' : '0.25'
-    }
+    }, 
+    'simulation_type': 'free'
 }
 
 # Create and launch bb
@@ -906,8 +892,7 @@ The **Fast Growth TI** approach relies on **Jarzynski's equality** (when transit
 
 - [Step 1](#tiStep1): Gathering together all the generated **dhdl files** (work values required to perform the transitions).
 - [Step 2](#tiStep2): Compute the **free energy** using **Jarzynski's equality**, **Crooks Fluctuation Theorem** and  **Bennett Acceptance Ratio** with pmx.
-
-*Note:* This tutorial is using a **Docker container** to run **pmx**. To use a local installation of **pmx**, just modify the appropriate properties parameter **pmx_cli_path**. 
+ 
 ***
 **Building Blocks** used:
  - [Pmxanalyse](https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.pmxanalyse) from **biobb_pmx.pmx.pmxanalyse** 
@@ -969,8 +954,6 @@ output_work_plot = 'pmx.plots.png'
   
 prop = {
     'reverseB' : True,
-    'container_path' : 'docker',
-    'container_image' : 'mmbirb/pmx'
 }
 
 #Create and launch bb
@@ -982,7 +965,7 @@ Pmxanalyse(input_a_xvg_zip_path=state_A_xvg_zip,
 
 ```
 
-<img src='_static/pmx.plots.png'></img>
+<img src='_static/pmx_plots.png'></img>
 
 <a id="output"></a>
 ## Output files
