@@ -965,7 +965,7 @@ Pmxanalyse(input_a_xvg_zip_path=state_A_xvg_zip,
 
 ```
 
-<img src='_static/pmx_plots.png'></img>
+<img src='_static/pmx.plots.png'></img>
 
 <a id="output"></a>
 ## Output files
