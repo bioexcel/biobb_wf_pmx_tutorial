@@ -6,7 +6,7 @@ This tutorial aims to illustrate how to compute a **fast-growth** **mutation fre
 
 The **non-equilibrium free energy calculation** protocol performs a **fast alchemical transition** in the direction **WT->Mut** and back **Mut->WT**. The two **equilibrium trajectories** needed for the tutorial, one for **Wild Type (WT)** and another for the **Mutated (Mut)** protein (Isoleucine 10 to Alanine -I10A-), have already been generated and are included in this example.  We will name **WT as stateA** and **Mut as stateB**.
 
-<img src="_static/schema.png" />
+<img src="schema.png" />
 
 The tutorial calculates the **free energy difference** in the folded state of a protein. Starting from **two 1ns-length independent equilibrium simulations** (WT and mutant), snapshots are selected to start **fast (50ps) transitions** driving the system in the **forward** (WT to mutant) and **reverse** (mutant to WT) directions, and the **work values** required to perform these transitions are collected. With these values, **Crooks Gaussian Intersection** (CGI), **Bennett Acceptance Ratio** (BAR) and **Jarzynski estimator** methods are used to calculate the **free energy difference** between the two states.
 
@@ -104,7 +104,7 @@ In this tutorial, just **5 snapshots** for each state (forward, reverse) are gen
 ```python
 # GMXTrjConvStrEns: extract an ensemble of snapshots from a GROMACS trajectory file
 # Import module
-from biobb_analysis.gromacs.gmx_trjconv_str_ens import GMXTrjConvStrEns
+from biobb_analysis.gromacs.gmx_trjconv_str_ens import gmx_trjconv_str_ens
 
 #### State A ####
 
@@ -121,10 +121,10 @@ prop = {
 }
 
 # Create and launch bb (StateA)        
-GMXTrjConvStrEns(input_traj_path=stateA_traj,
+gmx_trjconv_str_ens(input_traj_path=stateA_traj,
                  input_top_path=stateA_tpr,
                  output_str_ens_path=output_framesA,
-                 properties=prop).launch()
+                 properties=prop)
 
 # Extract stateA (WT) frames
 with zipfile.ZipFile(output_framesA, 'r') as zip_f:
@@ -146,10 +146,10 @@ prop = {
 }
 
 # Create and launch bb (StateB)
-GMXTrjConvStrEns(input_traj_path=stateB_traj,
+gmx_trjconv_str_ens(input_traj_path=stateB_traj,
                  input_top_path=stateB_tpr,
                  output_str_ens_path=output_framesB,
-                 properties=prop).launch()
+                 properties=prop)
     
 # # Extract stateB (Mutant) frames
 with zipfile.ZipFile(output_framesB, 'r') as zip_f:
@@ -189,7 +189,7 @@ pdbB = stateB_pdb_list[0]
 # pmx mutate: Mutate command from pmx package
 
 # Import module
-from biobb_pmx.pmx.pmxmutate import Pmxmutate
+from biobb_pmx.pmx.pmxmutate import pmxmutate
 
 #### State A (WT->Mut) ####
 
@@ -203,9 +203,9 @@ prop = {
     'gmx_lib' : gmxlib
 }
 # Create and launch bb
-Pmxmutate(input_structure_path=pdbA,
+pmxmutate(input_structure_path=pdbA,
        output_structure_path=output_structure_mutA,
-       properties=prop).launch()
+       properties=prop)
 
 #### State B (Mut->WT) ####
 
@@ -219,10 +219,9 @@ prop = {
     'gmx_lib' : gmxlib
 }
 # Create and launch bb
-Pmxmutate(input_structure_path=pdbB,
+pmxmutate(input_structure_path=pdbB,
        output_structure_path=output_structure_mutB,
-       properties=prop).launch()
-
+       properties=prop)
 ```
 
 <a id="top"></a>
@@ -247,7 +246,7 @@ Generating two output files:
 # Create system topology
 
 # Import module
-from biobb_md.gromacs.pdb2gmx import Pdb2gmx
+from biobb_md.gromacs.pdb2gmx import pdb2gmx
 
 #### State A (WT->Mut) ####
 
@@ -261,10 +260,10 @@ prop = {
 }
 
 # Create and launch bb
-Pdb2gmx(input_pdb_path=output_structure_mutA,
+pdb2gmx(input_pdb_path=output_structure_mutA,
         output_gro_path=output_pdb2gmxA_gro,
         output_top_zip_path=output_pdb2gmxA_top_zip,
-        properties=prop).launch()
+        properties=prop)
 
 #### State B (Mut->WT) ####
 
@@ -278,10 +277,10 @@ prop = {
 }
 
 # Create and launch bb
-Pdb2gmx(input_pdb_path=output_structure_mutB,
+pdb2gmx(input_pdb_path=output_structure_mutB,
         output_gro_path=output_pdb2gmxB_gro,
         output_top_zip_path=output_pdb2gmxB_top_zip,
-        properties=prop).launch()
+        properties=prop)
 ```
 
 <a id="hybridtop"></a>
@@ -298,7 +297,7 @@ Pdb2gmx(input_pdb_path=output_structure_mutB,
 # pmx gentop: Gentop command (Generate Hybrid Topology) from pmx package
 
 # Import module
-from biobb_pmx.pmx.pmxgentop import Pmxgentop
+from biobb_pmx.pmx.pmxgentop import pmxgentop
 
 #### State A (WT->Mut) ####
 
@@ -313,10 +312,10 @@ prop = {
 }
 
 #Create and launch bb
-Pmxgentop(input_top_zip_path=output_pdb2gmxA_top_zip,
+pmxgentop(input_top_zip_path=output_pdb2gmxA_top_zip,
        output_top_zip_path=output_pmxtopA_top_zip,
        output_log_path=output_pmxtopA_log,
-       properties=prop).launch()
+       properties=prop)
 
 #### State B (Mut->WT) ####
 
@@ -331,10 +330,10 @@ prop = {
 }
 
 # Create and launch bb
-Pmxgentop(input_top_zip_path=output_pdb2gmxB_top_zip,
+pmxgentop(input_top_zip_path=output_pdb2gmxB_top_zip,
        output_top_zip_path=output_pmxtopB_top_zip,
        output_log_path=output_pmxtopB_log,
-       properties=prop).launch()
+       properties=prop)
 ```
 
 <a id="index"></a>
@@ -356,7 +355,7 @@ The **GROMACS** index file is built to **identify the dummy atoms** in the follo
 # IMPORTANT: Only needed for stateB
 
 # Import module
-from biobb_md.gromacs.make_ndx import MakeNdx
+from biobb_md.gromacs.make_ndx import make_ndx
 
 # Create prop dict and inputs/outputs
 output_ndx = 'indexB.ndx'
@@ -366,9 +365,9 @@ prop = {
 }
 
 # Create and launch bb
-MakeNdx(input_structure_path=output_pdb2gmxB_gro,
+make_ndx(input_structure_path=output_pdb2gmxB_gro,
         output_ndx_path=output_ndx,
-        properties=prop).launch()
+        properties=prop)
 ```
 
 <a id="min"></a>
@@ -395,7 +394,7 @@ Please note that as previously described, for the stateA (forward transition, Is
 
 ```python
 # Grompp: Creating portable binary run file for dummy atoms energy minimization
-from biobb_md.gromacs.grompp import Grompp
+from biobb_md.gromacs.grompp import grompp
 
 #### State B (Mut->WT) ####
 
@@ -418,11 +417,11 @@ prop = {
 }
 
 # Create and launch bb
-Grompp(input_gro_path=output_pdb2gmxB_gro,
+grompp(input_gro_path=output_pdb2gmxB_gro,
        input_top_zip_path=output_pmxtopB_top_zip,
        input_ndx_path=output_ndx,
        output_tpr_path=output_tpr_min,
-       properties=prop).launch()
+       properties=prop)
 ```
 
 <a id="emStep2"></a>
@@ -432,7 +431,7 @@ Running **energy minimization** using the **tpr file** generated in the previous
 
 ```python
 # Mdrun: Running minimization
-from biobb_md.gromacs.mdrun import Mdrun
+from biobb_md.gromacs.mdrun import mdrun
 
 # Create prop dict and inputs/outputs
 output_min_trr = 'emout.trr'
@@ -441,11 +440,11 @@ output_min_edr = 'emout.edr'
 output_min_log = 'emout.log'
 
 # Create and launch bb
-Mdrun(input_tpr_path=output_tpr_min,
+mdrun(input_tpr_path=output_tpr_min,
       output_trr_path=output_min_trr,
       output_gro_path=output_min_gro,
       output_edr_path=output_min_edr,
-      output_log_path=output_min_log).launch()
+      output_log_path=output_min_log)
 ```
 
 <a id="emStep3"></a>
@@ -455,7 +454,7 @@ Checking **energy minimization** results. Plotting **potential energy** by time 
 
 ```python
 # GMXEnergy: Getting system energy by time  
-from biobb_analysis.gromacs.gmx_energy import GMXEnergy
+from biobb_analysis.gromacs.gmx_energy import gmx_energy
 
 # Create prop dict and inputs/outputs
 output_min_ene_xvg = 'min_ene.xvg'
@@ -464,9 +463,9 @@ prop = {
 }
 
 # Create and launch bb
-GMXEnergy(input_energy_path=output_min_edr, 
+gmx_energy(input_energy_path=output_min_edr, 
           output_xvg_path=output_min_ene_xvg, 
-          properties=prop).launch()
+          properties=prop)
 ```
 
 
@@ -538,7 +537,7 @@ In this particular example, the default parameters will be used: **md** integrat
 
 ```python
 # Grompp: Creating portable binary run file for system equilibration
-from biobb_md.gromacs.grompp import Grompp
+from biobb_md.gromacs.grompp import grompp
 
 #### State A (WT->Mut) ####
 
@@ -558,10 +557,10 @@ prop = {
 }
 
 #Create and launch bb
-Grompp(input_gro_path=output_pdb2gmxA_gro,
+grompp(input_gro_path=output_pdb2gmxA_gro,
        input_top_zip_path=output_pmxtopA_top_zip,
        output_tpr_path=output_tprA_eq,
-       properties=prop).launch()
+       properties=prop)
 
 
 #### State B (Mut->WT) ####
@@ -580,10 +579,10 @@ prop = {
     'simulation_type': 'free'
 }
 #Create and launch bb
-Grompp(input_gro_path=output_min_gro,
+grompp(input_gro_path=output_min_gro,
        input_top_zip_path=output_pmxtopB_top_zip,
        output_tpr_path=output_tprB_eq,
-       properties=prop).launch()
+       properties=prop)
 
 ```
 
@@ -593,7 +592,7 @@ Grompp(input_gro_path=output_min_gro,
 
 ```python
 # Mdrun: Running equilibration
-from biobb_md.gromacs.mdrun import Mdrun
+from biobb_md.gromacs.mdrun import mdrun
 
 #### State A (WT->Mut) ####
 
@@ -604,11 +603,11 @@ output_eqA_edr = 'eqoutA.edr'
 output_eqA_log = 'eqoutA.log'
 
 # Create and launch bb
-Mdrun(input_tpr_path=output_tprA_eq,
+mdrun(input_tpr_path=output_tprA_eq,
       output_trr_path=output_eqA_trr,
       output_gro_path=output_eqA_gro,
       output_edr_path=output_eqA_edr,
-      output_log_path=output_eqA_log).launch()
+      output_log_path=output_eqA_log)
 
 #### State B (Mut->WT) ####
 
@@ -619,11 +618,11 @@ output_eqB_edr = 'eqoutB.edr'
 output_eqB_log = 'eqoutB.log'
 
 # Create and launch bb
-Mdrun(input_tpr_path=output_tprB_eq,
+mdrun(input_tpr_path=output_tprB_eq,
       output_trr_path=output_eqB_trr,
       output_gro_path=output_eqB_gro,
       output_edr_path=output_eqB_edr,
-      output_log_path=output_eqB_log).launch()
+      output_log_path=output_eqB_log)
 ```
 
 <a id="eqNPTStep3"></a>
@@ -633,7 +632,7 @@ Checking **NPT Equilibration** results. Plotting **system pressure and density**
 
 ```python
 # GMXEnergy: Getting system pressure and density by time during NPT Equilibration  
-from biobb_analysis.gromacs.gmx_energy import GMXEnergy
+from biobb_analysis.gromacs.gmx_energy import gmx_energy
 
 #### State A (WT->Mut) ####
 
@@ -644,9 +643,9 @@ prop = {
 }
 
 # Create and launch bb
-GMXEnergy(input_energy_path=output_eqA_edr, 
+gmx_energy(input_energy_path=output_eqA_edr, 
           output_xvg_path=output_eqA_pd_xvg, 
-          properties=prop).launch()
+          properties=prop)
 
 #### State B (Mut->WT) ####
 
@@ -657,9 +656,9 @@ prop = {
 }
 
 # Create and launch bb
-GMXEnergy(input_energy_path=output_eqB_edr, 
+gmx_energy(input_energy_path=output_eqB_edr, 
           output_xvg_path=output_eqB_pd_xvg, 
-          properties=prop).launch()
+          properties=prop)
 ```
 
 Please note the information shown by the next plots **increases with the time simulated**, and are included as a **reference for more complex calculations**.   
@@ -811,7 +810,7 @@ prop = {
 Grompp(input_gro_path=output_eqA_gro,
        input_top_zip_path=output_pmxtopA_top_zip,
        output_tpr_path=output_tprA_ti,
-       properties=prop).launch()
+       properties=prop)
 
 #### State B (Mut->WT) ####
 
@@ -833,10 +832,10 @@ prop = {
 }
 
 # Create and launch bb
-Grompp(input_gro_path=output_eqB_gro,
+grompp(input_gro_path=output_eqB_gro,
        input_top_zip_path=output_pmxtopB_top_zip,
        output_tpr_path=output_tprB_ti,
-       properties=prop).launch()
+       properties=prop)
 
 ```
 
@@ -846,7 +845,7 @@ Grompp(input_gro_path=output_eqB_gro,
 
 ```python
 # Mdrun: Running equilibration
-from biobb_md.gromacs.mdrun import Mdrun
+from biobb_md.gromacs.mdrun import mdrun
 
 #### State A (WT->Mut) ####
 
@@ -858,12 +857,12 @@ output_tiA_log = 'tiA.log'
 output_tiA_dhdl = 'tiA.dhdl'
 
 # Create and launch bb
-Mdrun(input_tpr_path=output_tprA_ti,
+mdrun(input_tpr_path=output_tprA_ti,
       output_trr_path=output_tiA_trr,
       output_gro_path=output_tiA_gro,
       output_edr_path=output_tiA_edr,
       output_log_path=output_tiA_log,
-      output_dhdl_path=output_tiA_dhdl).launch()
+      output_dhdl_path=output_tiA_dhdl)
 
 #### State B (Mut->WT) ####
 
@@ -875,12 +874,12 @@ output_tiB_log = 'tiB.log'
 output_tiB_dhdl = 'tiB.dhdl'
 
 # Create and launch bb
-Mdrun(input_tpr_path=output_tprB_ti,
+mdrun(input_tpr_path=output_tprB_ti,
       output_trr_path=output_tiB_trr,
       output_gro_path=output_tiB_gro,
       output_edr_path=output_tiB_edr,
       output_log_path=output_tiB_log,
-      output_dhdl_path=output_tiB_dhdl).launch()
+      output_dhdl_path=output_tiB_dhdl)
 ```
 
 <a id="post"></a>
@@ -936,7 +935,7 @@ Compute the **free energy** using **Jarzynski's equality**, **Crooks Fluctuation
 # pmx analyse: analyze_dhdl command from pmx package
 
 # Import module
-from biobb_pmx.pmx.pmxanalyse import Pmxanalyse
+from biobb_pmx.pmx.pmxanalyse import pmxanalyse
 
 # Create prop dict and inputs/outputs
 
@@ -957,15 +956,26 @@ prop = {
 }
 
 #Create and launch bb
-Pmxanalyse(input_a_xvg_zip_path=state_A_xvg_zip,
+pmxanalyse(input_a_xvg_zip_path=state_A_xvg_zip,
         input_b_xvg_zip_path=state_B_xvg_zip,
         output_result_path=output_result,
         output_work_plot_path=output_work_plot,
-        properties=prop).launch()
+        properties=prop)
 
 ```
 
-<img src='_static/pmx.plots.png'></img>
+
+```python
+from IPython.display import Image
+Image(filename=output_work_plot)
+```
+
+
+
+
+<img src='_static/pmx.plots.png' />
+
+
 
 <a id="output"></a>
 ## Output files

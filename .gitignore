@@ -12,14 +12,11 @@ guidelines.md
 *.err
 *.out
 *.ndx
+biobb_wf_pmx_tutorial/notebooks/*/
 biobb_wf_pmx_tutorial/notebooks/*.dat
 biobb_wf_pmx_tutorial/notebooks/*.gro
 *.itp
-!biobb_wf_pmx_tutorial/notebooks/pmx_tutorial/mutff45/amber99sb-star-ildn-mut.ff/*.itp
-!biobb_wf_pmx_tutorial/notebooks/pmx_tutorial/mutff45/amber99sbmut.ff/*.itp
-!biobb_wf_pmx_tutorial/notebooks/pmx_tutorial/mutff45/charmm22starmut.ff/*.itp
-!biobb_wf_pmx_tutorial/notebooks/pmx_tutorial/mutff45/charmm36mut.ff/*.itp
-!biobb_wf_pmx_tutorial/notebooks/pmx_tutorial/mutff45/oplsaamut.ff/*.itp
+!biobb_wf_pmx_tutorial/notebooks/pmx_tutorial/
 biobb_wf_pmx_tutorial/notebooks/*.zip
 biobb_wf_pmx_tutorial/notebooks/*.tpr
 biobb_wf_pmx_tutorial/notebooks/*.xtc
