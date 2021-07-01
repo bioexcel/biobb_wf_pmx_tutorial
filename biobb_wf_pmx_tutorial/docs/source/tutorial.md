@@ -198,7 +198,7 @@ output_structure_mutA = 'mutA.pdb'
   
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
-    'mutation_list' : 'Ile10Ala',
+    'mutation_list' : '10Ala',
     'pmx_path' : 'pmx',
     'gmx_lib' : gmxlib
 }
@@ -214,7 +214,7 @@ output_structure_mutB = 'mutB.pdb'
   
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
-    'mutation_list' : 'Ala10Ile',
+    'mutation_list' : '10Ile',
     'pmx_path' : 'pmx',
     'gmx_lib' : gmxlib
 }
