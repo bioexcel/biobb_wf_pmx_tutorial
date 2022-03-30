@@ -823,7 +823,7 @@ prop = {
         'nsteps':'5000',
         'free_energy' : 'yes',
         'init-lambda' : '0',
-        'delta-lambda' : '4e-5',
+        'delta-lambda' : '2e-4',
         'sc-alpha' : '0.3',
         'sc-coul' : 'yes',
         'sc-sigma' : '0.25'
