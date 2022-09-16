@@ -33,3 +33,5 @@ biobb_wf_pmx_tutorial/notebooks/*.docs.ipynb
 *.bk.ipynb
 \#*\#
 .idea
+
+.DS_Store
