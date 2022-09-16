@@ -794,7 +794,7 @@ In this particular example, the default parameters will be used: **md** integrat
 
 ```python
 # Grompp: Creating portable binary run file for thermodynamic integration (TI)
-from biobb_gromacs.gromacs.grompp import Grompp
+from biobb_gromacs.gromacs.grompp import grompp
 
 #### State A (WT->Mut) ####
 
@@ -816,7 +816,7 @@ prop = {
 }
 
 # Create and launch bb
-Grompp(input_gro_path=output_eqA_gro,
+grompp(input_gro_path=output_eqA_gro,
        input_top_zip_path=output_pmxtopA_top_zip,
        output_tpr_path=output_tprA_ti,
        properties=prop)

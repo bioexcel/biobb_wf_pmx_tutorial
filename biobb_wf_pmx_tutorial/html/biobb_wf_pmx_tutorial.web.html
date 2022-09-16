@@ -14377,7 +14377,7 @@ if (outputEl) {{
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Grompp: Creating portable binary run file for thermodynamic integration (TI)</span>
-<span class="kn">from</span> <span class="nn">biobb_gromacs.gromacs.grompp</span> <span class="kn">import</span> <span class="n">Grompp</span>
+<span class="kn">from</span> <span class="nn">biobb_gromacs.gromacs.grompp</span> <span class="kn">import</span> <span class="n">grompp</span>
 
 <span class="c1">#### State A (WT-&gt;Mut) ####</span>
 
@@ -14399,7 +14399,7 @@ if (outputEl) {{
 <span class="p">}</span>
 
 <span class="c1"># Create and launch bb</span>
-<span class="n">Grompp</span><span class="p">(</span><span class="n">input_gro_path</span><span class="o">=</span><span class="n">output_eqA_gro</span><span class="p">,</span>
+<span class="n">grompp</span><span class="p">(</span><span class="n">input_gro_path</span><span class="o">=</span><span class="n">output_eqA_gro</span><span class="p">,</span>
        <span class="n">input_top_zip_path</span><span class="o">=</span><span class="n">output_pmxtopA_top_zip</span><span class="p">,</span>
        <span class="n">output_tpr_path</span><span class="o">=</span><span class="n">output_tprA_ti</span><span class="p">,</span>
        <span class="n">properties</span><span class="o">=</span><span class="n">prop</span><span class="p">)</span>
