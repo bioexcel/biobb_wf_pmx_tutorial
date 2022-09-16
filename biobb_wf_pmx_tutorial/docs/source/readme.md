@@ -27,12 +27,14 @@ The tutorial calculates the **free energy difference** in the folded state of a 
 ### Biobb modules used
 
 * [biobb_pmx](https://github.com/bioexcel/biobb_pmx): Tools to setup and run Alchemical Free Energy calculations.
-* [biobb_md](https://github.com/bioexcel/biobb_md): Tools to setup and run Molecular Dynamics simulations.
+* [biobb_gromacs](https://github.com/bioexcel/biobb_gromacs): Tools to setup and run Molecular Dynamics simulations.
 * [biobb_analysis](https://github.com/bioexcel/biobb_analysis): Tools to analyse Molecular Dynamics trajectories.
 
 ### Auxiliar libraries used
 
 * [nb_conda_kernels](https://github.com/Anaconda-Platform/nb_conda_kernels): Enables a Jupyter Notebook or JupyterLab application in one conda environment to access kernels for Python, R, and other languages found in other environments.
+* [jupyter_contrib_nbextensions](https://github.com/ipython-contrib/jupyter_contrib_nbextensions): Contains a collection of community-contributed unofficial extensions that add functionality to the Jupyter notebook. 
+* [ipywidgets](https://github.com/jupyter-widgets/ipywidgets): Interactive HTML widgets for Jupyter notebooks and the IPython kernel.
 * [os](https://docs.python.org/3/library/os.html): Python miscellaneous operating system interfaces
 * [plotly](https://plot.ly/python/offline/): Python interactive graphing library integrated in Jupyter notebooks.
 
@@ -43,8 +45,14 @@ git clone https://github.com/bioexcel/biobb_wf_pmx_tutorial.git
 cd biobb_wf_pmx_tutorial
 conda env create -f conda_env/environment.yml
 conda activate biobb_wf_pmx_tutorial
-jupyter-nbextension enable --py --user widgetsnbextension
+jupyter nbextension enable python-markdown/main
 jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
+```
+
+Please execute the following command before launching the Jupyter Notebook if you experience some issues with widgets:
+
+```console
+jupyter-nbextension enable --py --user widgetsnbextension
 ```
 
 ***
@@ -56,13 +64,13 @@ Click here to [view tutorial in Read the Docs](https://biobb-wf-pmx-tutorial.rea
 ***
 
 ## Version
-2021.2
+2022.2
 
 ## Copyright & Licensing
 This software has been developed in the [MMB group](http://mmb.irbbarcelona.org) at the [BSC](http://www.bsc.es/) & [IRB](https://www.irbbarcelona.org/) for the [European BioExcel](http://bioexcel.eu/), funded by the European Commission (EU H2020 [823830](http://cordis.europa.eu/projects/823830), EU H2020 [675728](http://cordis.europa.eu/projects/675728)).
 
-* (c) 2015-2021 [Barcelona Supercomputing Center](https://www.bsc.es/)
-* (c) 2015-2021 [Institute for Research in Biomedicine](https://www.irbbarcelona.org/)
+* (c) 2015-2022 [Barcelona Supercomputing Center](https://www.bsc.es/)
+* (c) 2015-2022 [Institute for Research in Biomedicine](https://www.irbbarcelona.org/)
 
 Licensed under the
 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0), see the file LICENSE for details.

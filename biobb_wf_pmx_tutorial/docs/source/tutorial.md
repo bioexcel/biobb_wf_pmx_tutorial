@@ -15,14 +15,17 @@ The tutorial calculates the **free energy difference** in the folded state of a 
 **Biobb modules** used:
 
  - [biobb_pmx](https://github.com/bioexcel/biobb_pmx): Tools to setup and run Alchemical Free Energy calculations.
- - [biobb_md](https://github.com/bioexcel/biobb_md): Tools to setup and run Molecular Dynamics simulations.
+ - [biobb_gromacs](https://github.com/bioexcel/biobb_gromacs): Tools to setup and run Molecular Dynamics simulations.
  - [biobb_analysis](https://github.com/bioexcel/biobb_analysis): Tools to analyse Molecular Dynamics trajectories.
  
 **Auxiliar libraries** used:
 
- - [nb_conda_kernels](https://github.com/Anaconda-Platform/nb_conda_kernels): Enables a Jupyter Notebook or JupyterLab application in one conda environment to access kernels for Python, R, and other languages found in other environments.
- - [os](https://docs.python.org/3/library/os.html): Python miscellaneous operating system interfaces
- - [plotly](https://plot.ly/python/offline/): Python interactive graphing library integrated in Jupyter notebooks.
+* [nb_conda_kernels](https://github.com/Anaconda-Platform/nb_conda_kernels): Enables a Jupyter Notebook or JupyterLab application in one conda environment to access kernels for Python, R, and other languages found in other environments.
+* [jupyter_contrib_nbextensions](https://github.com/ipython-contrib/jupyter_contrib_nbextensions): Contains a collection of community-contributed unofficial extensions that add functionality to the Jupyter notebook. 
+* [ipywidgets](https://github.com/jupyter-widgets/ipywidgets): Interactive HTML widgets for Jupyter notebooks and the IPython kernel.
+* [os](https://docs.python.org/3/library/os.html): Python miscellaneous operating system interfaces
+* [plotly](https://plot.ly/python/offline/): Python interactive graphing library integrated in Jupyter notebooks.
+
 
 ### Conda Installation and Launch
 
@@ -31,9 +34,15 @@ git clone https://github.com/bioexcel/biobb_wf_pmx_tutorial.git
 cd biobb_wf_pmx_tutorial
 conda env create -f conda_env/environment.yml
 conda activate biobb_wf_pmx_tutorial
-jupyter-nbextension enable --py --user widgetsnbextension
+jupyter nbextension enable python-markdown/main
 jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
-  ``` 
+```
+
+Please execute the following command before launching the Jupyter Notebook if you experience some issues with widgets:
+
+```console
+jupyter-nbextension enable --py --user widgetsnbextension
+```
 
 ***
 ### Pipeline steps:
@@ -238,7 +247,7 @@ Generating two output files:
     - *GROMACS position restraint file/s* (itp file/s)
 ***
 **Building Blocks** used:
- - [Pdb2gmx](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.pdb2gmx) from **biobb_md.gromacs.pdb2gmx**
+ - [Pdb2gmx](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.pdb2gmx) from **biobb_gromacs.gromacs.pdb2gmx**
 ***
 
 
@@ -246,7 +255,7 @@ Generating two output files:
 # Create system topology
 
 # Import module
-from biobb_md.gromacs.pdb2gmx import pdb2gmx
+from biobb_gromacs.gromacs.pdb2gmx import pdb2gmx
 
 #### State A (WT->Mut) ####
 
@@ -346,16 +355,16 @@ In this particular example, the **WT to mutated protein transition** (Isoleucine
 The **GROMACS** index file is built to **identify the dummy atoms** in the following **energy minimization** step, generating a new **FREEZE group** containing all atoms of the system except the **dummy atoms**. In the minimization process, this group will be **kept frozen**, whereas the **dummy atoms** will be left able to move. 
 ***
 **Building Blocks** used:
- - [MakeNdx](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.make_ndx) from **biobb_md.gromacs.make_ndx**
+ - [MakeNdx](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.make_ndx) from **biobb_gromacs.gromacs.make_ndx**
 ***
 
 
 ```python
-# Gromacs make_ndx: GROMACS Make index command from biobb_md package
+# Gromacs make_ndx: GROMACS Make index command from biobb_gromacs package
 # IMPORTANT: Only needed for stateB
 
 # Import module
-from biobb_md.gromacs.make_ndx import make_ndx
+from biobb_gromacs.gromacs.make_ndx import make_ndx
 
 # Create prop dict and inputs/outputs
 output_ndx = 'indexB.ndx'
@@ -379,8 +388,8 @@ Energetically minimize the **mutated protein** till reaching a desired potential
 - [Step 3](#emStep3): Checking **energy minimization** results. Plotting energy by time during the **minimization** process.
 ***
 **Building Blocks** used:
- - [Grompp](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.grompp) from **biobb_md.gromacs.grompp** 
- - [Mdrun](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.mdrun) from **biobb_md.gromacs.mdrun** 
+ - [Grompp](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.grompp) from **biobb_gromacs.gromacs.grompp** 
+ - [Mdrun](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.mdrun) from **biobb_gromacs.gromacs.mdrun** 
  - [GMXEnergy](https://biobb-analysis.readthedocs.io/en/latest/gromacs.html#module-gromacs.gmx_energy) from **biobb_analysis.gromacs.gmx_energy** 
 ***
 
@@ -394,7 +403,7 @@ Please note that as previously described, for the stateA (forward transition, Is
 
 ```python
 # Grompp: Creating portable binary run file for dummy atoms energy minimization
-from biobb_md.gromacs.grompp import grompp
+from biobb_gromacs.gromacs.grompp import grompp
 
 #### State B (Mut->WT) ####
 
@@ -431,7 +440,7 @@ Running **energy minimization** using the **tpr file** generated in the previous
 
 ```python
 # Mdrun: Running minimization
-from biobb_md.gromacs.mdrun import mdrun
+from biobb_gromacs.gromacs.mdrun import mdrun
 
 # Create prop dict and inputs/outputs
 output_min_trr = 'emout.trr'
@@ -509,8 +518,8 @@ Equilibrate the **protein system** in **NPT** ensemble (constant Number of parti
 - [Step 3](#eqNPTStep3): Checking **NPT Equilibration** results. Plotting **system pressure and density** by time during the **NPT equilibration** process.
 ***
 **Building Blocks** used:
- - [Grompp](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.grompp) from **biobb_md.gromacs.grompp** 
- - [Mdrun](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.mdrun) from **biobb_md.gromacs.mdrun** 
+ - [Grompp](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.grompp) from **biobb_gromacs.gromacs.grompp** 
+ - [Mdrun](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.mdrun) from **biobb_gromacs.gromacs.mdrun** 
  - [GMXEnergy](https://biobb-analysis.readthedocs.io/en/latest/gromacs.html#module-gromacs.gmx_energy) from **biobb_analysis.gromacs.gmx_energy** 
 ***
 
@@ -537,7 +546,7 @@ In this particular example, the default parameters will be used: **md** integrat
 
 ```python
 # Grompp: Creating portable binary run file for system equilibration
-from biobb_md.gromacs.grompp import grompp
+from biobb_gromacs.gromacs.grompp import grompp
 
 #### State A (WT->Mut) ####
 
@@ -592,7 +601,7 @@ grompp(input_gro_path=output_min_gro,
 
 ```python
 # Mdrun: Running equilibration
-from biobb_md.gromacs.mdrun import mdrun
+from biobb_gromacs.gromacs.mdrun import mdrun
 
 #### State A (WT->Mut) ####
 
@@ -760,8 +769,8 @@ plotly.offline.iplot(fig)
 - [Step 2](#mdStep2): Run short MD simulation of the **protein system**.
 ***
 **Building Blocks** used:
- - [Grompp](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.grompp) from **biobb_md.gromacs.grompp** 
- - [Mdrun](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.mdrun) from **biobb_md.gromacs.mdrun** 
+ - [Grompp](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.grompp) from **biobb_gromacs.gromacs.grompp** 
+ - [Mdrun](https://biobb-md.readthedocs.io/en/latest/gromacs.html#module-gromacs.mdrun) from **biobb_gromacs.gromacs.mdrun** 
 ***
 
 <a id="mdStep1"></a>
@@ -785,7 +794,7 @@ In this particular example, the default parameters will be used: **md** integrat
 
 ```python
 # Grompp: Creating portable binary run file for thermodynamic integration (TI)
-from biobb_md.gromacs.grompp import Grompp
+from biobb_gromacs.gromacs.grompp import Grompp
 
 #### State A (WT->Mut) ####
 
@@ -845,7 +854,7 @@ grompp(input_gro_path=output_eqB_gro,
 
 ```python
 # Mdrun: Running equilibration
-from biobb_md.gromacs.mdrun import mdrun
+from biobb_gromacs.gromacs.mdrun import mdrun
 
 #### State A (WT->Mut) ####
 
