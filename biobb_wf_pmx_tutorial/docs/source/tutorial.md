@@ -86,7 +86,7 @@ import os
 import zipfile
 
 cwd = os.getcwd()
-gmxlib = os.getenv('CONDA_PREFIX')+'/lib/python3.7/site-packages/pmx/data/mutff45/'
+gmxlib = os.getenv('CONDA_PREFIX')+'/lib/python3.9/site-packages/pmx/data/mutff/'
 
 stateA_traj = cwd + "/pmx_tutorial/stateA_1ns.xtc"
 stateA_tpr = cwd + "/pmx_tutorial/stateA.tpr"
@@ -190,7 +190,7 @@ pdbB = stateB_pdb_list[0]
 
 ***
 **Building Blocks** used:
- - [Pmxmutate](https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.pmxmutate) from **biobb_pmx.pmx.pmxmutate**
+ - [Pmxmutate](https://biobb-pmx.readthedocs.io/en/latest/pmxbiobb.html#module-pmxbiobb.pmxmutate) from **biobb_pmx.pmxbiobb.pmxmutate**
 ***
 
 
@@ -198,7 +198,7 @@ pdbB = stateB_pdb_list[0]
 # pmx mutate: Mutate command from pmx package
 
 # Import module
-from biobb_pmx.pmx.pmxmutate import pmxmutate
+from biobb_pmx.pmxbiobb.pmxmutate import pmxmutate
 
 #### State A (WT->Mut) ####
 
@@ -208,7 +208,7 @@ output_structure_mutA = 'mutA.pdb'
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
     'mutation_list' : '10Ala',
-    'pmx_path' : 'pmx',
+    'binary_path' : 'pmx',
     'gmx_lib' : gmxlib
 }
 # Create and launch bb
@@ -224,7 +224,7 @@ output_structure_mutB = 'mutB.pdb'
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
     'mutation_list' : '10Ile',
-    'pmx_path' : 'pmx',
+    'binary_path' : 'pmx',
     'gmx_lib' : gmxlib
 }
 # Create and launch bb
@@ -298,7 +298,7 @@ pdb2gmx(input_pdb_path=output_structure_mutB,
 
 ***
 **Building Blocks** used:
- - [Pmxgentop](https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.pmxgentop) from **biobb_pmx.pmx.pmxgentop**
+ - [Pmxgentop](https://biobb-pmx.readthedocs.io/en/latest/pmxbiobb.html#module-pmxbiobb.pmxgentop) from **biobb_pmx.pmxbiobb.pmxgentop**
 ***
 
 
@@ -306,7 +306,7 @@ pdb2gmx(input_pdb_path=output_structure_mutB,
 # pmx gentop: Gentop command (Generate Hybrid Topology) from pmx package
 
 # Import module
-from biobb_pmx.pmx.pmxgentop import pmxgentop
+from biobb_pmx.pmxbiobb.pmxgentop import pmxgentop
 
 #### State A (WT->Mut) ####
 
@@ -316,7 +316,7 @@ output_pmxtopA_log = 'pmxA_top.log'
   
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
-    'pmx_path' : 'pmx',
+    'binary_path' : 'pmx',
     'gmx_lib' : gmxlib
 }
 
@@ -334,7 +334,7 @@ output_pmxtopB_log = 'pmxB_top.log'
   
 prop = {
     'force_field' : 'amber99sb-star-ildn-mut',
-    'pmx_path' : 'pmx',
+    'binary_path' : 'pmx',
     'gmx_lib' : gmxlib
 }
 
@@ -863,7 +863,7 @@ output_tiA_trr = 'tiA.trr'
 output_tiA_gro = 'tiA.gro'
 output_tiA_edr = 'tiA.edr'
 output_tiA_log = 'tiA.log'
-output_tiA_dhdl = 'tiA.dhdl'
+output_tiA_dhdl = 'tiA.xvg'
 
 # Create and launch bb
 mdrun(input_tpr_path=output_tprA_ti,
@@ -880,7 +880,7 @@ output_tiB_trr = 'tiB.trr'
 output_tiB_gro = 'tiB.gro'
 output_tiB_edr = 'tiB.edr'
 output_tiB_log = 'tiB.log'
-output_tiB_dhdl = 'tiB.dhdl'
+output_tiB_dhdl = 'tiB.xvg'
 
 # Create and launch bb
 mdrun(input_tpr_path=output_tprB_ti,
@@ -903,7 +903,7 @@ The **Fast Growth TI** approach relies on **Jarzynski's equality** (when transit
  
 ***
 **Building Blocks** used:
- - [Pmxanalyse](https://biobb-pmx.readthedocs.io/en/latest/pmx.html#module-pmx.pmxanalyse) from **biobb_pmx.pmx.pmxanalyse** 
+ - [Pmxanalyse](https://biobb-pmx.readthedocs.io/en/latest/pmxbiobb.html#module-pmxbiobb.pmxanalyse) from **biobb_pmx.pmxbiobb.pmxanalyse** 
 ***
 
 <a id="tiStep1"></a>
@@ -944,7 +944,7 @@ Compute the **free energy** using **Jarzynski's equality**, **Crooks Fluctuation
 # pmx analyse: analyze_dhdl command from pmx package
 
 # Import module
-from biobb_pmx.pmx.pmxanalyse import pmxanalyse
+from biobb_pmx.pmxbiobb.pmxanalyse import pmxanalyse
 
 # Create prop dict and inputs/outputs
 
@@ -957,7 +957,7 @@ from biobb_pmx.pmx.pmxanalyse import pmxanalyse
 state_A_xvg_zip = 'pmx_tutorial/dhdlA.zip'
 state_B_xvg_zip = 'pmx_tutorial/dhdlB.zip'
 
-output_result = 'pmx.outputs'
+output_result = 'pmx.txt'
 output_work_plot = 'pmx.plots.png'
   
 prop = {
@@ -990,7 +990,7 @@ Image(filename=output_work_plot)
 ## Output files
 
 Important **Output files** generated:
- - pmx.outputs: **Final free energy estimation**. Summary of information got applying the different methods.
+ - pmx.txt: **Final free energy estimation**. Summary of information got applying the different methods.
  - pmx.plots.png: **Final free energy plot** of the **Mutation free energy** pipeline.
 
 ***

@@ -3,10 +3,12 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - biobb_pmx==3.8.1
-  - biobb_gromacs==3.8.0
-  - biobb_analysis==3.8.0
+  - biobb_pmx==4.0.0
+  - biobb_gromacs==4.0.0
+  - biobb_analysis==4.0.2
   - ipywidgets==7.6.6
+  - jupyter_client==7.3.2
+  - tornado==6.1
   - jupyter_contrib_nbextensions
   - plotly
   - conda
