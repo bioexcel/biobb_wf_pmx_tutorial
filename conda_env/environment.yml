@@ -9,7 +9,6 @@ dependencies:
   - jupyter_client==7.3.2
   - traitlets==5.9.0
   - nb_conda_kernels
-  - importlib_metadata
   - jupyter_contrib_nbextensions
   - plotly
   - conda
