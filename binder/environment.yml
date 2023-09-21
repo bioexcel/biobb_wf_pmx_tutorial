@@ -6,7 +6,5 @@ dependencies:
   - biobb_pmx==4.1.0
   - biobb_gromacs==4.1.0
   - biobb_analysis==4.1.0
-  - jupyter_client==7.3.2
-  - jupyter_contrib_nbextensions
   - plotly
   - conda
