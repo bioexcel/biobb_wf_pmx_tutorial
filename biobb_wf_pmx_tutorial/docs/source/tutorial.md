@@ -1,5 +1,5 @@
 # Mutation Free Energy Calculations using BioExcel Building Blocks (biobb)
-### Based on the official pmx tutorial: http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/index.html
+**Based on the official pmx tutorial:** [http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/index.html](http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/index.html)
 ***
 
 This tutorial aims to illustrate how to compute a **fast-growth** **mutation free energy** calculation, step by step, using the **BioExcel Building Blocks library (biobb)**. The particular example used is the **Staphylococcal nuclease** protein (PDB code 1STN), a small, minimal protein, appropriate for a short tutorial. 
@@ -12,20 +12,19 @@ The tutorial calculates the **free energy difference** in the folded state of a 
 
 *Please note that for the sake of disk space this tutorial is using 1ns-length equilibrium trajectories, whereas in the [original example](http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/eq.mdp) the equilibrium trajectories used were obtained from 10ns-length simulations.*
 ***
-**Biobb modules** used:
+
+## Settings
+
+### Biobb modules used:
 
  - [biobb_pmx](https://github.com/bioexcel/biobb_pmx): Tools to setup and run Alchemical Free Energy calculations.
  - [biobb_gromacs](https://github.com/bioexcel/biobb_gromacs): Tools to setup and run Molecular Dynamics simulations.
  - [biobb_analysis](https://github.com/bioexcel/biobb_analysis): Tools to analyse Molecular Dynamics trajectories.
  
-**Auxiliar libraries** used:
+### Auxiliar libraries used
 
-* [nb_conda_kernels](https://github.com/Anaconda-Platform/nb_conda_kernels): Enables a Jupyter Notebook or JupyterLab application in one conda environment to access kernels for Python, R, and other languages found in other environments.
-* [jupyter_contrib_nbextensions](https://github.com/ipython-contrib/jupyter_contrib_nbextensions): Contains a collection of community-contributed unofficial extensions that add functionality to the Jupyter notebook. 
-* [ipywidgets](https://github.com/jupyter-widgets/ipywidgets): Interactive HTML widgets for Jupyter notebooks and the IPython kernel.
-* [os](https://docs.python.org/3/library/os.html): Python miscellaneous operating system interfaces
+* [jupyter](https://jupyter.org/): Free software, open standards, and web services for interactive computing across all programming languages.
 * [plotly](https://plot.ly/python/offline/): Python interactive graphing library integrated in Jupyter notebooks.
-
 
 ### Conda Installation and Launch
 
@@ -34,18 +33,11 @@ git clone https://github.com/bioexcel/biobb_wf_pmx_tutorial.git
 cd biobb_wf_pmx_tutorial
 conda env create -f conda_env/environment.yml
 conda activate biobb_wf_pmx_tutorial
-jupyter nbextension enable python-markdown/main
 jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
 ```
 
-Please execute the following command before launching the Jupyter Notebook if you experience some issues with widgets:
-
-```console
-jupyter-nbextension enable --py --user widgetsnbextension
-```
-
 ***
-### Pipeline steps:
+## Pipeline steps:
  1. [Workflow required files](#input)
  2. [Extract Snapshots from Equilibrium Trajectories](#extract)
  3. [Modelling mutated structure](#mut)
