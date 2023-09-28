@@ -51,6 +51,8 @@ jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
 
 Click here to [view tutorial in Read the Docs](https://biobb-wf-pmx-tutorial.readthedocs.io/en/latest/?badge=latest)
 
+Click here to [execute tutorial in Binder](https://mybinder.org/v2/gh/bioexcel/biobb_wf_pmx_tutorial/HEAD?labpath=biobb_wf_pmx_tutorial%2Fnotebooks%2Fbiobb_wf_pmx_tutorial.ipynb)
+
 ***
 
 ## Version
