@@ -12,6 +12,7 @@ guidelines.md
 *.err
 *.out
 *.ndx
+!requirements.txt
 biobb_wf_pmx_tutorial/notebooks/*/
 biobb_wf_pmx_tutorial/notebooks/*.dat
 biobb_wf_pmx_tutorial/notebooks/*.gro
