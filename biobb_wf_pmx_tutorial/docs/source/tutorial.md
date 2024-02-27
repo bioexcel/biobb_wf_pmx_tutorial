@@ -2,7 +2,7 @@
 **Based on the official pmx tutorial:** [http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/index.html](http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/index.html)
 ***
 
-This tutorial aims to illustrate how to compute a **fast-growth** **mutation free energy** calculation, step by step, using the **BioExcel Building Blocks library (biobb)**. The particular example used is the **Staphylococcal nuclease** protein (PDB code 1STN), a small, minimal protein, appropriate for a short tutorial. 
+This tutorial aims to illustrate how to compute a **fast-growth** **mutation free energy** calculation, step by step, using the **BioExcel Building Blocks library (biobb)**. The particular example used is the **Staphylococcal nuclease** protein (PDB code 1STN, [https://doi.org/10.2210/pdb1STN/pdb](https://doi.org/10.2210/pdb1STN/pdb)), a small, minimal protein, appropriate for a short tutorial. 
 
 The **non-equilibrium free energy calculation** protocol performs a **fast alchemical transition** in the direction **WT->Mut** and back **Mut->WT**. The two **equilibrium trajectories** needed for the tutorial, one for **Wild Type (WT)** and another for the **Mutated (Mut)** protein (Isoleucine 10 to Alanine -I10A-), have already been generated and are included in this example.  We will name **WT as stateA** and **Mut as stateB**.
 
@@ -376,7 +376,7 @@ make_ndx(input_structure_path=output_pdb2gmxB_gro,
 ## Energetically minimize the system
 Energetically minimize the **mutated protein** till reaching a desired potential energy.
 - [Step 1](#emStep1): Creating portable binary run file for energy minimization
-- [Step 2](#emStep2): Energetically minimize the **dummy atoms** till reaching a force of 100 kJ mol-1 nm-1.
+- [Step 2](#emStep2): Energetically minimize the **dummy atoms** till reaching a force of 100 kJ/mol*nm.
 - [Step 3](#emStep3): Checking **energy minimization** results. Plotting energy by time during the **minimization** process.
 ***
 **Building Blocks** used:
@@ -388,7 +388,7 @@ Energetically minimize the **mutated protein** till reaching a desired potential
 <a id="emStep1"></a>
 ### Step 1: Creating portable binary run file for energy minimization
 
-Method used to run the **energy minimization** is a **steepest descent**, with a **maximum force of 100 KJ/mol\*nm^2**, and a minimization **step size of 1fs**. The **maximum number of steps** to perform if the maximum force is not reached is **10,000 steps**. The previously generated **FREEZE** group is used to keep the system frozen except for the **dummy atoms**.
+Method used to run the **energy minimization** is a **steepest descent**, with a **maximum force of 100 kJ/mol\*nm^2**, and a minimization **step size of 1fs**. The **maximum number of steps** to perform if the maximum force is not reached is **10,000 steps**. The previously generated **FREEZE** group is used to keep the system frozen except for the **dummy atoms**.
 
 Please note that as previously described, for the stateA (forward transition, Isoleucine to Alanine mutation), as there are no dummies, **the energy minimization is omitted** and **the energy minimization step is skipped**. 
 
@@ -474,7 +474,7 @@ gmx_energy(input_energy_path=output_min_edr,
 import plotly
 import plotly.graph_objs as go
 
-# Read data from file and filter energy values higher than 1000 Kj/mol^-1
+# Read data from file and filter energy values higher than 1000 kJ/mol
 with open(output_min_ene_xvg,'r') as energy_file:
     x,y = map(
         list,
@@ -492,7 +492,7 @@ fig = ({
     "data": [go.Scatter(x=x, y=y)],
     "layout": go.Layout(title="Energy Minimization",
                         xaxis=dict(title = "Energy Minimization Step"),
-                        yaxis=dict(title = "Potential Energy KJ/mol-1")
+                        yaxis=dict(title = "Potential Energy kJ/mol")
                        )
 })
 
