@@ -30,6 +30,8 @@ biobb_wf_pmx_tutorial/notebooks/*.png
 biobb_wf_pmx_tutorial/notebooks/*.gif
 biobb_wf_pmx_tutorial/notebooks/*.web.ipynb
 biobb_wf_pmx_tutorial/notebooks/*.docs.ipynb
+biobb_wf_pmx_tutorial/docs/notebooks
+biobb_wf_pmx_tutorial/html/biobb_wf_pmx_tutorial.web.ipynb
 *.old.ipynb
 *.bk.ipynb
 \#*\#
