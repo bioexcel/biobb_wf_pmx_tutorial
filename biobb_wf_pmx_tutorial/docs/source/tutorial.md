@@ -21,7 +21,7 @@ The tutorial calculates the **free energy difference** in the folded state of a 
  - [biobb_gromacs](https://github.com/bioexcel/biobb_gromacs): Tools to setup and run Molecular Dynamics simulations.
  - [biobb_analysis](https://github.com/bioexcel/biobb_analysis): Tools to analyse Molecular Dynamics trajectories.
  
-### Auxiliar libraries used
+### Auxiliary libraries used
 
 * [jupyter](https://jupyter.org/): Free software, open standards, and web services for interactive computing across all programming languages.
 * [plotly](https://plot.ly/python/offline/): Python interactive graphing library integrated in Jupyter notebooks.
@@ -64,7 +64,7 @@ Workflow **Input files** needed:
  - **stateA_tpr**: **WT protein topology** (GROMACS tpr format).
  - **stateB_tpr**: **Mutated protein topology** (GROMACS tpr format).
  
-Auxiliar **force field libraries** needed:
+Auxiliary **force field libraries** needed:
  - **mutff45** (folder): pmx mutation force field libraries. 
  
 Collected **transitions work values**:  
