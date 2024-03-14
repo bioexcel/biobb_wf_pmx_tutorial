@@ -1,0 +1,27 @@
+{
+  "@context": "http://schema.org",
+  "name": "Mutation Free Energy Calculations workflow",
+  "@type": "ItemList",
+  "itemListElement": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://raw.githubusercontent.com/bioexcel/biobb/master/references.jsonld",
+      "name": "biobb"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://raw.githubusercontent.com/bioexcel/biobb_pmx/master/references.jsonld",
+      "name": "biobb_pmx"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://raw.githubusercontent.com/bioexcel/biobb_gromacs/master/references.jsonld",
+      "name": "biobb_gromacs"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://raw.githubusercontent.com/bioexcel/biobb_analysis/master/references.jsonld",
+      "name": "biobb_analysis"
+    }
+  ]
+}
