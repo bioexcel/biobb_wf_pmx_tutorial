@@ -1,7 +1,8 @@
 {
   "@context": "http://schema.org",
-  "name": "Mutation Free Energy Calculations workflow",
+  "@id": "https://github.com/bioexcel/biobb_wf_pmx_tutorial",
   "@type": "ItemList",
+  "name": "Mutation Free Energy Calculations workflow",
   "itemListElement": [
     {
       "@type": "SoftwareApplication",
