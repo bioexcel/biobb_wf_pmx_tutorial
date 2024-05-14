@@ -49,7 +49,7 @@ jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
  12. [Questions & Comments](#questions)
 
 ***
-<img style="width:400px;" src="logo.png" />
+<img style="width:400px;" src="_static/logo.png" />
 
 ***
 
