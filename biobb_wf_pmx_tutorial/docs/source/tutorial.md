@@ -1,26 +1,23 @@
 # Mutation Free Energy Calculations using BioExcel Building Blocks (biobb)
-**Based on the official pmx tutorial:** [http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/index.html](http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/index.html)
+### Based on the official pmx tutorial: http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/index.html
 ***
 
 This tutorial aims to illustrate how to compute a **fast-growth** **mutation free energy** calculation, step by step, using the **BioExcel Building Blocks library (biobb)**. The particular example used is the **Staphylococcal nuclease** protein (PDB code 1STN, [https://doi.org/10.2210/pdb1STN/pdb](https://doi.org/10.2210/pdb1STN/pdb)), a small, minimal protein, appropriate for a short tutorial. 
 
 The **non-equilibrium free energy calculation** protocol performs a **fast alchemical transition** in the direction **WT->Mut** and back **Mut->WT**. The two **equilibrium trajectories** needed for the tutorial, one for **Wild Type (WT)** and another for the **Mutated (Mut)** protein (Isoleucine 10 to Alanine -I10A-), have already been generated and are included in this example.  We will name **WT as stateA** and **Mut as stateB**.
 
-<img src="_static/schema.png" />
+<img src="schema.png" />
 
 The tutorial calculates the **free energy difference** in the folded state of a protein. Starting from **two 1ns-length independent equilibrium simulations** (WT and mutant), snapshots are selected to start **fast (50ps) transitions** driving the system in the **forward** (WT to mutant) and **reverse** (mutant to WT) directions, and the **work values** required to perform these transitions are collected. With these values, **Crooks Gaussian Intersection** (CGI), **Bennett Acceptance Ratio** (BAR) and **Jarzynski estimator** methods are used to calculate the **free energy difference** between the two states.
 
 *Please note that for the sake of disk space this tutorial is using 1ns-length equilibrium trajectories, whereas in the [original example](http://pmx.mpibpc.mpg.de/sardinia2018_tutorial1/eq.mdp) the equilibrium trajectories used were obtained from 10ns-length simulations.*
 ***
+### Biobb modules used
 
-## Settings
+* [biobb_pmx](https://github.com/bioexcel/biobb_pmx): Tools to setup and run Alchemical Free Energy calculations.
+* [biobb_gromacs](https://github.com/bioexcel/biobb_gromacs): Tools to setup and run Molecular Dynamics simulations.
+* [biobb_analysis](https://github.com/bioexcel/biobb_analysis): Tools to analyse Molecular Dynamics trajectories.
 
-### Biobb modules used:
-
- - [biobb_pmx](https://github.com/bioexcel/biobb_pmx): Tools to setup and run Alchemical Free Energy calculations.
- - [biobb_gromacs](https://github.com/bioexcel/biobb_gromacs): Tools to setup and run Molecular Dynamics simulations.
- - [biobb_analysis](https://github.com/bioexcel/biobb_analysis): Tools to analyse Molecular Dynamics trajectories.
- 
 ### Auxiliary libraries used
 
 * [jupyter](https://jupyter.org/): Free software, open standards, and web services for interactive computing across all programming languages.
@@ -37,7 +34,7 @@ jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
 ```
 
 ***
-## Pipeline steps:
+### Pipeline steps:
  1. [Workflow required files](#input)
  2. [Extract Snapshots from Equilibrium Trajectories](#extract)
  3. [Modelling mutated structure](#mut)
@@ -52,9 +49,51 @@ jupyter-notebook biobb_wf_pmx_tutorial/notebooks/biobb_wf_pmx_tutorial.ipynb
  12. [Questions & Comments](#questions)
 
 ***
-<img style="width:400px;" src="_static/logo.png" />
+<img style="width:400px;" src="logo.png" />
 
 ***
+
+## Initializing colab
+The two cells below are used only in case this notebook is executed via **Google Colab**. Take into account that, for running conda on **Google Colab**, the **condacolab** library must be installed. As [explained here](https://pypi.org/project/condacolab/), the installation requires a **kernel restart**, so when running this notebook in **Google Colab**, don't run all cells until this **installation** is properly **finished** and the **kernel** has **restarted**.
+
+
+```python
+# Only executed when using google colab
+import sys
+if 'google.colab' in sys.modules:
+  import subprocess
+  from pathlib import Path
+  try:
+    subprocess.run(["conda", "-V"], check=True)
+  except FileNotFoundError:
+    subprocess.run([sys.executable, "-m", "pip", "install", "condacolab"], check=True)
+    import condacolab
+    condacolab.install()
+    # Clone repository
+    repo_URL = "https://github.com/bioexcel/biobb_wf_pmx_tutorial.git"
+    repo_name = Path(repo_URL).name.split('.')[0]
+    if not Path(repo_name).exists():
+      subprocess.run(["mamba", "install", "-y", "git"], check=True)
+      subprocess.run(["git", "clone", repo_URL], check=True)
+      print("⏬ Repository properly cloned.")
+    # Install environment
+    print("⏳ Creating environment...")
+    env_file_path = f"{repo_name}/conda_env/environment.yml"
+    subprocess.run(["mamba", "env", "update", "-n", "base", "-f", env_file_path], check=True)
+    print("👍 Conda environment successfully created and updated.")
+```
+
+
+```python
+# Enable widgets for colab
+if 'google.colab' in sys.modules:
+  from google.colab import output
+  output.enable_custom_widget_manager()
+  # Change working dir
+  import os
+  os.chdir("biobb_wf_pmx_tutorial/biobb_wf_pmx_tutorial/notebooks")
+  print(f"📂 New working directory: {os.getcwd()}")
+```
 
 <a id="input"></a>
 ## Workflow required files
@@ -75,10 +114,13 @@ Collected **transitions work values**:
 
 ```python
 import os
+import sys
 import zipfile
 
 cwd = os.getcwd()
-gmxlib = os.getenv('CONDA_PREFIX')+'/lib/python3.9/site-packages/pmx/data/mutff/'
+# set prefix
+prefix = '/usr/local' if 'google.colab' in sys.modules else os.getenv('CONDA_PREFIX') 
+gmxlib = prefix + '/lib/python3.10/site-packages/pmx/data/mutff/'
 
 stateA_traj = cwd + "/pmx_tutorial/stateA_1ns.xtc"
 stateA_tpr = cwd + "/pmx_tutorial/stateA.tpr"
@@ -471,32 +513,29 @@ gmx_energy(input_energy_path=output_min_edr,
 
 
 ```python
-import plotly
 import plotly.graph_objs as go
 
 # Read data from file and filter energy values higher than 1000 kJ/mol
-with open(output_min_ene_xvg,'r') as energy_file:
-    x,y = map(
-        list,
-        zip(*[
-            (float(line.split()[0]),float(line.split()[1]))
-            for line in energy_file 
-            if not line.startswith(("#","@")) 
-            if float(line.split()[1]) < 1000 
-        ])
-    )
+with open(output_min_ene_xvg, 'r') as energy_file:
+    x, y = zip(*[
+        (float(line.split()[0]), float(line.split()[1]))
+        for line in energy_file
+        if not line.startswith(("#", "@"))
+        if float(line.split()[1]) < 1000 
+    ])
 
-plotly.offline.init_notebook_mode(connected=True)
+# Create a scatter plot
+fig = go.Figure(data=go.Scatter(x=x, y=y, mode='lines+markers'))
 
-fig = ({
-    "data": [go.Scatter(x=x, y=y)],
-    "layout": go.Layout(title="Energy Minimization",
-                        xaxis=dict(title = "Energy Minimization Step"),
-                        yaxis=dict(title = "Potential Energy kJ/mol")
-                       )
-})
+# Update layout
+fig.update_layout(title="Energy Minimization",
+                  xaxis_title="Energy Minimization Step",
+                  yaxis_title="Potential Energy kJ/mol",
+                  height=600)
 
-plotly.offline.iplot(fig)
+# Show the figure (renderer changes for colab and jupyter)
+rend = 'colab' if 'google.colab' in sys.modules else ''
+fig.show(renderer=rend)
 ```
 
 <img src='_static/plot1.png'></img>
@@ -666,22 +705,16 @@ Please note the information shown by the next plots **increases with the time si
 
 
 ```python
-import plotly
-from plotly import subplots
 import plotly.graph_objs as go
+from plotly.subplots import make_subplots
 
-# Read pressure and density data from file 
+# Read pressure and density data from file  
 with open(output_eqA_pd_xvg,'r') as pd_file:
-    x,y,z = map(
-        list,
-        zip(*[
-            (float(line.split()[0]),float(line.split()[1]),float(line.split()[2]))
-            for line in pd_file 
-            if not line.startswith(("#","@")) 
-        ])
-    )
-
-plotly.offline.init_notebook_mode(connected=True)
+    x, y, z = zip(*[
+        (float(line.split()[0]), float(line.split()[1]), float(line.split()[2]))
+        for line in pd_file
+        if not line.startswith(("#", "@"))
+    ])
 
 trace1 = go.Scatter(
     x=x,y=y
@@ -690,42 +723,39 @@ trace2 = go.Scatter(
     x=x,y=z
 )
 
-fig = subplots.make_subplots(rows=1, cols=2, print_grid=False)
-
+fig = make_subplots(rows=1, cols=2, print_grid=False)
 fig.append_trace(trace1, 1, 1)
 fig.append_trace(trace2, 1, 2)
 
-fig['layout']['xaxis1'].update(title='Time (ps)')
-fig['layout']['xaxis2'].update(title='Time (ps)')
-fig['layout']['yaxis1'].update(title='Pressure (bar)')
-fig['layout']['yaxis2'].update(title='Density (Kg*m^-3)')
+fig.update_layout(
+    height=500,
+    title='Pressure and Density during NPT Equilibration',
+    showlegend=False,
+    xaxis1_title='Time (ps)',
+    yaxis1_title='Pressure (bar)',
+    xaxis2_title='Time (ps)',
+    yaxis2_title='Density (Kg*m^-3)'
+)
 
-fig['layout'].update(title='Pressure and Density during NPT Equilibration')
-fig['layout'].update(showlegend=False)
-
-plotly.offline.iplot(fig)
+# Show the figure (renderer changes for colab and jupyter)
+rend = 'colab' if 'google.colab' in sys.modules else ''
+fig.show(renderer=rend)
 ```
 
 <img src='_static/plot2.png'></img>
 
 
 ```python
-import plotly
-from plotly import subplots
 import plotly.graph_objs as go
+from plotly.subplots import make_subplots
 
-# Read pressure and density data from file 
+# Read pressure and density data from file  
 with open(output_eqB_pd_xvg,'r') as pd_file:
-    x,y,z = map(
-        list,
-        zip(*[
-            (float(line.split()[0]),float(line.split()[1]),float(line.split()[2]))
-            for line in pd_file 
-            if not line.startswith(("#","@")) 
-        ])
-    )
-
-plotly.offline.init_notebook_mode(connected=True)
+    x, y, z = zip(*[
+        (float(line.split()[0]), float(line.split()[1]), float(line.split()[2]))
+        for line in pd_file
+        if not line.startswith(("#", "@"))
+    ])
 
 trace1 = go.Scatter(
     x=x,y=y
@@ -734,20 +764,23 @@ trace2 = go.Scatter(
     x=x,y=z
 )
 
-fig = subplots.make_subplots(rows=1, cols=2, print_grid=False)
-
+fig = make_subplots(rows=1, cols=2, print_grid=False)
 fig.append_trace(trace1, 1, 1)
 fig.append_trace(trace2, 1, 2)
 
-fig['layout']['xaxis1'].update(title='Time (ps)')
-fig['layout']['xaxis2'].update(title='Time (ps)')
-fig['layout']['yaxis1'].update(title='Pressure (bar)')
-fig['layout']['yaxis2'].update(title='Density (Kg*m^-3)')
+fig.update_layout(
+    height=500,
+    title='Pressure and Density during NPT Equilibration',
+    showlegend=False,
+    xaxis1_title='Time (ps)',
+    yaxis1_title='Pressure (bar)',
+    xaxis2_title='Time (ps)',
+    yaxis2_title='Density (Kg*m^-3)'
+)
 
-fig['layout'].update(title='Pressure and Density during NPT Equilibration')
-fig['layout'].update(showlegend=False)
-
-plotly.offline.iplot(fig)
+# Show the figure (renderer changes for colab and jupyter)
+rend = 'colab' if 'google.colab' in sys.modules else ''
+fig.show(renderer=rend)
 ```
 
 <img src='_static/plot3.png'></img>
@@ -971,19 +1004,14 @@ from IPython.display import Image
 Image(filename=output_work_plot)
 ```
 
-
-
-
-<img src='_static/pmx.plots.png' />
-
-
+<img src='_static/pmx.plots.png'></img>
 
 <a id="output"></a>
 ## Output files
 
 Important **Output files** generated:
- - pmx.txt: **Final free energy estimation**. Summary of information got applying the different methods.
- - pmx.plots.png: **Final free energy plot** of the **Mutation free energy** pipeline.
+ - {{output_result}}: **Final free energy estimation**. Summary of information got applying the different methods.
+ - {{output_work_plot}}: **Final free energy plot** of the **Mutation free energy** pipeline.
 
 ***
 <a id="questions"></a>
