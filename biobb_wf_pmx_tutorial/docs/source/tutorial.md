@@ -1010,8 +1010,8 @@ Image(filename=output_work_plot)
 ## Output files
 
 Important **Output files** generated:
- - {{output_result}}: **Final free energy estimation**. Summary of information got applying the different methods.
- - {{output_work_plot}}: **Final free energy plot** of the **Mutation free energy** pipeline.
+ - **output_result** (pmx.txt): **Final free energy estimation**. Summary of information got applying the different methods.
+ - **output_work_plot** (pmx.plots.png): **Final free energy plot** of the **Mutation free energy** pipeline.
 
 ***
 <a id="questions"></a>
